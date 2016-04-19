@@ -14,7 +14,7 @@
     "compression": "^1.5.2",
     "method-override": "^2.3.0",
     "glob": "^6.0.4",
-    "jade": "^1.11.0"
+    "express-handlebars": "^3.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
