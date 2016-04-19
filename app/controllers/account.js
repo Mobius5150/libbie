@@ -14,7 +14,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
       res.redirect('/account');
     });
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
 // TODO: Verify authentication
 router.get('/account', function (req, res, next) {
