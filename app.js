@@ -41,8 +41,6 @@ passport.deserializeUser(function(obj, cb) {
 	cb(null, { obj: obj });
 });
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
-
 app.listen(config.port, function () {
   console.log('Express server listening on port ' + config.port);
 });
