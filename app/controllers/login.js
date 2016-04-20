@@ -1,15 +1,15 @@
 var express = require('express'),
-  router = express.Router();
+	router = express.Router();
 
 module.exports = function (app) {
 	app.use('/', router);
 };
 
 router.get('/login', function (req, res, next) {
-    res.render('login', {
-      title: 'Login to Libbie',
-      authProviders: []
-    });
+	res.render('login', {
+		title: 'Login to Libbie',
+		authProviders: []
+	});
 });
 
 router.get('/logout', function (req, res, next) {
@@ -21,8 +21,8 @@ router.get('/logout', function (req, res, next) {
 	
 	req.user = null;
 
-    res.render('login', {
-      title: 'You have been logged out of Libbie',
-      authProviders: []
-    });
+	res.render('login', {
+		title: 'You have been logged out of Libbie',
+		authProviders: []
+	});
 });

@@ -6,9 +6,8 @@ module.exports = function (app) {
 	app.use('/account', router);
 };
 
-// TODO: Verify authentication
 router.get('/', function (req, res, next) {
-	console.log('User: ', req.user);
+	console.log('User: ', req);
 	res.render('account', {
 		title: 'Libbie Alpha Application Account',
 		userName: req.user.displayName,
