@@ -1,17 +1,21 @@
-
-
 var express = require('express'),
-  config = require('./config/config');
+	config = require('./config/config');
 
 var passport = require('passport');
 
 var app = express();
 
-// app.configure(function(){
-	app.use(passport.initialize());
-	app.use(passport.session());
-	require('./config/express')(app, config);
-// });
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/express')(app, config);
+
+function isAuthenticated(req, res, next) {
+	if (req.user !== undefined) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -20,11 +24,11 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 //   credentials (in this case, a token, tokenSecret, and Google profile), and
 //   invoke a callback with a user object.
 passport.use(new GoogleStrategy({
-  clientID: '693947618941-cev7gf2mh1eeng2m271lcn5oalmird4n.apps.googleusercontent.com',
-  clientSecret: 'hQnqgsqg2yX1gPzjh3RxP13r',
-  scope: ['profile'],
-  callbackURL: "https://libbie.azurewebsites.net/auth/google/callback",
-  realm: 'https://libbie.azurewebsites.net/'
+	clientID: '693947618941-cev7gf2mh1eeng2m271lcn5oalmird4n.apps.googleusercontent.com',
+	clientSecret: 'hQnqgsqg2yX1gPzjh3RxP13r',
+	scope: ['profile'],
+	callbackURL: "https://libbie.azurewebsites.net/auth/google/callback",
+	realm: 'https://libbie.azurewebsites.net/'
 },
 function(token, tokenSecret, profile, done) {
     // User.findOrCreate({ googleId: profile.id }, function (err, user) {
@@ -42,6 +46,6 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 app.listen(config.port, function () {
-  console.log('Express server listening on port ' + config.port);
+	console.log('Express server listening on port ' + config.port);
 });
 
