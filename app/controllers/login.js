@@ -14,9 +14,13 @@ router.get('/login', function (req, res, next) {
 
 router.get('/logout', function (req, res, next) {
 	req.logout();
-	req.session.destroy();
-	req.user = null;
+
+	if (req.session !== undefined) {
+		req.session.destroy();
+	}
 	
+	req.user = null;
+
     res.render('login', {
       title: 'You have been logged out of Libbie',
       authProviders: []
