@@ -1,4 +1,55 @@
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	$(document).ready(function(){
+		var config = {
+			entryKey: 'Enter',
+			isbnInput: $('input#isbn'),
+		};
 
+		var socket = io('https://libbie.azurewebsites.net');
+		socket.on('error', function (data) {
+			console.log("Server sent error: ", data);
+		});
 
-  <h1>{{title }}</h1>
-  <p>Welcome {{userName }}</p>
+		socket.on('isbnIdentified', function isbnIdentified(data) {
+			console.log("ISBN Identified: ", data);
+
+			// TODO: Should use handlebars
+			$('.addedIsbn.' + data.isbn + ' .title').text(data.title);
+		});
+
+		config.isbnInput.keypress(function keypressHandler(event) {
+			if (event.key === config.entryKey) {
+				config.isbnInput.focus();
+
+				var isbn = config.isbnInput.val();
+				if (!validateIsbn(isbn)) {
+					alert("Invalid isbn!");
+					return;
+				}
+
+				console.log("Sending addIsbn request...");
+				socket.emit('addIsbn', {
+					isbn: isbn,
+				});
+
+				$('#searchList').append('<div class="addedIsbn ' + isbn + '"><span class="isbn">' + isbn + '</span><span class="title"></span></div>');
+			}
+		});
+
+		function validateIsbn(isbn) {
+			return true;
+		}
+	});
+	</script>
+
+	<h1>{{title }}</h1>
+	<p>Welcome {{userName }}</p>
+
+	<p>
+		<input type="text" id="isbn" name="isbn" placeholder="isbn" />
+	</p>
+
+	<div id="searchList">
+		
+	</div>

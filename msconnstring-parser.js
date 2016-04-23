@@ -13,16 +13,18 @@ var m = module.exports = {
 		var obj = {};
 
 		for (var field in fields) {
-			var kvp = fields[field].split('=', 2);
-			if (kvp.length != 2) {
+			var split = fields[field].indexOf('=');
+
+			if (split < 1) {
 				continue;
 			}
 
-			var key = camelCase(kvp[0]);
+			var key = camelCase(fields[field].substring(0, split));
+			var value = fields[field].substring(split + 1, fields[field].length);
 			if (typeof knownFields[key] === 'function') {
-				obj[key] = knownFields[key](kvp[1]);
+				obj[key] = knownFields[key](value);
 			} else {
-				obj[key] = kvp[1];
+				obj[key] = value;
 			}
 		}
 
@@ -65,17 +67,20 @@ function dataSourceParser(dataSourceString) {
 
 function camelCase(inStr) {
 	var words = inStr.split(/\s+/);
-	for (var w in words) {
-		var word = words[w];
-		if (word.length === 1) {
-			word = word.toUpperCase();
-		} else if (word.length > 1) {
-			word = word[0].toUpperCase() + word.substring(1, word.length).toLowerCase();
-		} else {
-			continue;
-		}
 
-		words[w] = word;
+	if (words.length > 1) {
+		for (var w in words) {
+			var word = words[w];
+			if (word.length === 1) {
+				word = word.toUpperCase();
+			} else if (word.length > 1) {
+				word = word[0].toUpperCase() + word.substring(1, word.length).toLowerCase();
+			} else {
+				continue;
+			}
+
+			words[w] = word;
+		}
 	}
 
 	var str = words.join('');

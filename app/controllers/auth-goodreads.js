@@ -8,7 +8,7 @@ module.exports = function (app) {
 
 router.get('/auth/goodreads/callback', passport.authenticate('goodreads', { 
 	successRedirect: '/account',
-	failureRedirect: '/login?auth=failed&google=true' 
+	failureRedirect: '/login?auth=failed&goodreads=true' 
 }));
 
 router.get('/auth/goodreads', passport.authenticate('goodreads'));

@@ -2,7 +2,7 @@ var path = require('path'),
 rootPath = path.normalize(__dirname + '/..'),
 env = process.env.NODE_ENV || 'development';
 
-console.log("Config: ", process.env);
+var parser = require(path.join(rootPath, 'msconnstring-parser.js'));
 
 var dbConfig = {
 	connString: process.env.SQLCONNSTR_MS_TableConnectionString,
@@ -15,7 +15,6 @@ var dbConfig = {
 };
 
 if (typeof dbConfig.connString === 'string' && dbConfig.connString.length > 0) {
-	var parser = require('./msconnstring-parser.js');
 	var connInfo = parser.parse(dbConfig.connString);
 	dbConfig.userName = connInfo.userId;
 	dbConfig.server = connInfo.dataSource.uri;
@@ -24,7 +23,17 @@ if (typeof dbConfig.connString === 'string' && dbConfig.connString.length > 0) {
 	dbConfig.port = connInfo.dataSource.port;
 }
 
-console.log("Database configuration: ", dbConfig);
+var storageConfig = {
+	connString: process.env.CUSTOMCONNSTR_MS_AzureStorageAccountConnectionString,
+	storageAccount: '',
+	accessKey: '',
+};
+
+if (typeof storageConfig.connString === 'string' && storageConfig.connString.length > 0) {
+	var connInfo = parser.parse(storageConfig.connString);
+	storageConfig.storageAccount = connInfo.accountName;
+	storageConfig.accessKey = connInfo.accountKey;
+}
 
 var sessionConfig = {
 	secret: process.env.SESSION_SECRET,
@@ -47,11 +56,13 @@ var config = {
 		app: {
 			name: 'libbie'
 		},
+		environment: env,
 		port: process.env.PORT || 3000,
 		session: sessionConfig,
 		google: googleConfig,
 		goodreads: goodreadsConfig,
 		database: dbConfig,
+		storage: storageConfig,
 	},
 
 	test: {
@@ -59,11 +70,13 @@ var config = {
 		app: {
 			name: 'libbie'
 		},
+		environment: env,
 		port: process.env.PORT || 3000,
 		session: sessionConfig,
 		google: googleConfig,
 		goodreads: goodreadsConfig,
 		database: dbConfig,
+		storage: storageConfig,
 	},
 
 	production: {
@@ -71,11 +84,13 @@ var config = {
 		app: {
 			name: 'libbie'
 		},
+		environment: env,
 		port: process.env.PORT || 3000,
 		session: sessionConfig,
 		google: googleConfig,
 		goodreads: goodreadsConfig,
 		database: dbConfig,
+		storage: storageConfig,
 	}
 };
 

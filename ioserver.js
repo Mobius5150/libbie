@@ -10,14 +10,14 @@ var config = null;
 
 var gr = require('goodreads.js');
 
-module.exports = function(cfg, server) {
+module.exports = function initIoServer(cfg, server) {
 	config = cfg;
 	io = require('socket.io').listen(server);
-	dbConn = new Connection(config.database);
+	// dbConn = new Connection(config.database);
 
-	connection.on('connect', function(err) {
-		console.log('Connected to MySQL');
-	});
+	// dbConn.on('connect', function(err) {
+	// 	console.log('Connected to MySQL');
+	// });
 
 	io.on('connection', socketIoConnected);
 
@@ -26,10 +26,14 @@ module.exports = function(cfg, server) {
 		// cookieParser: cookieParser,       // the same middleware you registrer in express
 		key:          config.session.key,       // the name of the cookie where express/connect stores its session_id
 		secret:       config.session.secret,    // the session_secret to parse the cookie
-		store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+		store:        config.session.store,        // we NEED to use a sessionstore. no memorystore please
 		success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
 		fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
 	}));
+}
+
+function socketIoConnected(socket) {
+	socket.on('addIsbn', addIsbn);
 }
 
 function addIsbn(data) {
@@ -77,9 +81,9 @@ function onAuthorizeSuccess(data, accept){
 }
 
 function onAuthorizeFail(data, message, error, accept){
-	if(error) {
-		throw new Error(message);
-	}
+	// if(error) {
+	// 	throw new Error(message);
+	// }
 
 	console.log('failed connection to socket.io:', message);
 
