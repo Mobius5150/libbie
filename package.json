@@ -14,12 +14,17 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
     "glob": "^6.0.4",
+    "goodreads.js": "0.0.8",
     "method-override": "^2.3.0",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
+    "passport-goodreads": "^1.0.0",
     "passport-google-oauth20": "^1.0.0",
     "passport-oauth": "^1.0.0",
-    "serve-favicon": "^2.3.0"
+    "passport.socketio": "^3.6.1",
+    "serve-favicon": "^2.3.0",
+    "socket.io": "^1.4.5",
+    "tedious": "^1.14.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
