@@ -62,8 +62,7 @@ function addIsbn(data) {
 				.then(function(book) {
 					socket.emit('isbnIdentified', {
 						isbn: data.isbn,
-						title: book.GoodreadsResponse.book[0].title,
-						book: book,
+						books: book.GoodreadsResponse.book,
 						id: book_id,
 					});
 				})

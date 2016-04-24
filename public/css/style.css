@@ -1,0 +1,78 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: url('/img/bg.jpg') fixed;
+  background-size: cover;
+}
+#application {
+  width: 800px;
+  margin: 0 auto;
+}
+#header {
+  color: white;
+  background-color: #074099;
+  border-radius: 5px;
+  padding: 1px 10px 0 10px;
+}
+input#isbn {
+  width: 774px;
+  font-size: 24px;
+  padding: 10px;
+  border: 3px solid #074099;
+  border-radius: 5px;
+  margin: 0 -10px;
+}
+a {
+  color: #00B7FF;
+}
+.clear {
+  clear: both;
+}
+.addedIsbn {
+  border: 3px solid #074099;
+  border-radius: 10px;
+  /*background: #074099;*/
+  clear: both;
+  padding: 10px;
+  margin: 10px 0px;
+  position: relative;
+}
+.addedIsbn img {
+  width: 100px;
+  float: left;
+  opacity: 0;
+  padding: 5px 20px 5px 5px;
+}
+.addedIsbn span {
+  display: block;
+  padding: 5px;
+}
+.addedIsbn .sources {
+  bottom: 5px;
+  left: 110px;
+}
+.addedIsbn .sources .source {
+  display: inline-block;
+}
+.addedIsbn .sources .source.goodreads {
+  background: #eeeeee url('/img/goodreads_logo.png') no-repeat;
+  background-size: cover;
+  width: 106.5px;
+  height: 30px;
+  border-radius: 10px;
+  opacity: 0.5;
+}
+.addedIsbn:nth-last-child(1n+0) {
+  background: #2ecc71;
+}
+.addedIsbn:nth-last-child(2n+0) {
+  background: #3498db;
+}
+.addedIsbn:nth-last-child(3n+0) {
+  background: #9b59b6;
+}
+.addedIsbn:nth-last-child(4n+0) {
+  background: #f39c12;
+}
+.addedIsbn:nth-last-child(5n+0) {
+  background: #c0392b;
+}

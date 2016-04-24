@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "lessc public/css/style.less >> public/css/style.css && node app.js"
+    "start": "lessc public/css/style.less > public/css/style.css && node app.js"
   },
   "dependencies": {
     "body-parser": "^1.13.3",
