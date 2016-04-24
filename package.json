@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "lessc public/css/style.less && node app.js"
+    "start": "lessc public/css/style.less >> public/css/style.css && node app.js"
   },
   "dependencies": {
     "body-parser": "^1.13.3",
@@ -16,6 +16,7 @@
     "express-session": "^1.13.0",
     "glob": "^6.0.4",
     "goodreads.js": "0.0.8",
+    "limiter": "^1.1.0",
     "method-override": "^2.3.0",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
@@ -23,6 +24,7 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-oauth": "^1.0.0",
     "passport.socketio": "^3.6.1",
+    "q": "^1.4.1",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.4.5",
     "tedious": "^1.14.0"

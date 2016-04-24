@@ -1,5 +1,7 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
+var RateLimiter = require('limiter').RateLimiter;
+var q = require('q');
 
 var sessionStore     = require('express-session'),
 	passportSocketIo = require("passport.socketio");
@@ -7,6 +9,7 @@ var sessionStore     = require('express-session'),
 var io = null;
 var dbConn = null;
 var config = null;
+var limiter = new RateLimiter(1, 1000);
 
 var gr = require('goodreads.js');
 
@@ -37,8 +40,6 @@ function socketIoConnected(socket) {
 }
 
 function addIsbn(data) {
-	console.log('add isbn: ', data);
-
 	var socket = this;
 	var grClient = this.request.user.grClient;
 
@@ -48,34 +49,31 @@ function addIsbn(data) {
 		return;
 	}
 
-	if (typeof data.isbn !== 'string') {
+	if (typeof data.isbn !== 'string' || null !== data.isbn.match(/\A([0-9]{10}|[0-9]{13})\Z/)) {
 		this.emit('apperror', { type: 'application', msg: 'No ISBN given in request' });
 		return;
 	}
 
 	console.log('Request for isbn: ', data.isbn);
-	grClient.BookIsbnToId(data.isbn)
+	
+	wrapApi(grClient, grClient.BookIsbnToId, data.isbn)
 		.then(function (book_id) {
-			setTimeout(function(){
-				grClient.BookShow(book_id)
-					.then(function(book) {
-						socket.emit('isbnIdentified', {
-							isbn: data.isbn,
-							title: book.GoodreadsResponse.book[0].title,
-							book: book,
-							id: book_id,
-						});
-					})
-					.fail(function (err) {
-						socket.emit('apperror', { type: 'application', msg: 'Error retrieving book info', data: err });
+			wrapApi(grClient, grClient.BookShow, book_id)
+				.then(function(book) {
+					socket.emit('isbnIdentified', {
+						isbn: data.isbn,
+						title: book.GoodreadsResponse.book[0].title,
+						book: book,
+						id: book_id,
 					});
-			}, 1000);
+				})
+				.fail(function (err) {
+					socket.emit('apperror', { type: 'application', msg: 'Error retrieving book info', data: err });
+				});
 		})
 		.fail(function (err) {
 			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err });
 		});
-
-	
 }
 
 function onAuthorizeSuccess(data, accept){
@@ -118,4 +116,21 @@ function getGRClient(socket, cb) {
 	}
 
 	
+}
+
+function wrapApi(thisArg, f) {
+	var Q = q.defer();
+
+	var args = Array.prototype.slice.call(arguments);
+	args.splice(0, 2);
+
+	limiter.removeTokens(1, function (err, remaining) {
+		if (err) {
+			throw err;
+		}
+
+		Q.resolve(f.apply(thisArg, args));
+	});
+
+	return Q.promise;
 }
