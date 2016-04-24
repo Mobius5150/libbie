@@ -56,6 +56,7 @@ var config = {
 		app: {
 			name: 'libbie'
 		},
+		serverUrl: 'http://localhost:3000',
 		environment: env,
 		port: process.env.PORT || 3000,
 		session: sessionConfig,
@@ -70,6 +71,7 @@ var config = {
 		app: {
 			name: 'libbie'
 		},
+		serverUrl: 'http://localhost:3000',
 		environment: env,
 		port: process.env.PORT || 3000,
 		session: sessionConfig,
@@ -84,6 +86,7 @@ var config = {
 		app: {
 			name: 'libbie'
 		},
+		serverUrl: 'https://libbie.azurewebsites.net',
 		environment: env,
 		port: process.env.PORT || 3000,
 		session: sessionConfig,

@@ -39,39 +39,60 @@ function socketIoConnected(socket) {
 function addIsbn(data) {
 	console.log('add isbn: ', data);
 
-	if (typeof this.grClient === 'undefined') {
+	var socket = this;
+	var grClient = this.request.user.grClient;
+
+	if (typeof grClient === 'undefined') {
 		console.error("Socket does not have a goodreads client", this);
-		this.emit('error', { type: 'unauthorized' });
+		this.emit('apperror', { type: 'unauthorized' });
 		return;
 	}
 
 	if (typeof data.isbn !== 'string') {
-		this.emit('error', { type: 'application', msg: 'No ISBN given in request' });
+		this.emit('apperror', { type: 'application', msg: 'No ISBN given in request' });
 		return;
 	}
 
-	console.log('Request would proceed');
-	this.emit('isbnIdentified', {
-		isbn: data.isbn,
-		name: "My Book",
-	});
+	console.log('Request for isbn: ', data.isbn);
+	grClient.BookIsbnToId(data.isbn)
+		.then(function (book_id) {
+			setTimeout(function(){
+				grClient.BookShow(book_id)
+					.then(function(book) {
+						socket.emit('isbnIdentified', {
+							isbn: data.isbn,
+							title: book.GoodreadsResponse.book[0].title,
+							book: book,
+							id: book_id,
+						});
+					})
+					.fail(function (err) {
+						socket.emit('apperror', { type: 'application', msg: 'Error retrieving book info', data: err });
+					});
+			}, 1000);
+		})
+		.fail(function (err) {
+			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err });
+		});
+
+	
 }
 
 function onAuthorizeSuccess(data, accept){
-	console.log('successful connection to socket.io');
+	console.log('successful connection to socket.io', data);
 
-	var socket = this;
+	// var socket = this.conn.Socket;
+	var user = data.user;
 
-	var provider = new goodreads.provider({
+	var provider = new gr.provider({
 		'client_key': config.goodreads.key,
 		'client_secret': config.goodreads.secret,
-		'access_token': socket.request.user.grToken,
-		'access_token_secret': socket.request.user.grTokenSecret,
-	})
+		
+	});
 	
-	provider.CreateClient()
+	provider.CreateClient({ 'access_token': user.grToken, 'access_token_secret': user.grTokenSecret })
 		.then(function(client){
-			socket.grClient = client;
+			user.grClient = client;
 		})
 		.fail(function(err){
 			console.log("Could not connect goodreads client: ", err);
@@ -89,4 +110,12 @@ function onAuthorizeFail(data, message, error, accept){
 
 	// We use this callback to log all of our failed connections.
 	accept(null, false);
+}
+
+function getGRClient(socket, cb) {
+	if (typeof socket.grClient !== 'undefined') {
+		cb(socket.grClient);
+	}
+
+	
 }

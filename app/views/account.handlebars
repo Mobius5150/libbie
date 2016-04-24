@@ -6,7 +6,7 @@
 			isbnInput: $('input#isbn'),
 		};
 
-		var socket = io('https://libbie.azurewebsites.net');
+		var socket = io('http://localhost:3000');
 		socket.on('error', function (data) {
 			console.log("Server sent error: ", data);
 		});
@@ -27,6 +27,8 @@
 					alert("Invalid isbn!");
 					return;
 				}
+
+				config.isbnInput.val('');
 
 				console.log("Sending addIsbn request...");
 				socket.emit('addIsbn', {
@@ -51,5 +53,5 @@
 	</p>
 
 	<div id="searchList">
-		
+
 	</div>

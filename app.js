@@ -17,7 +17,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/account', isAuthenticated);
 
-// require('./ioserver.js')(config, server);
+require('./ioserver.js')(config, server);
 require('./config/express')(app, config);
 
 function isAuthenticated(req, res, next) {
@@ -53,11 +53,11 @@ function isAuthenticated(req, res, next) {
 	passport.use(new GoodreadsStrategy({
 		consumerKey: config.goodreads.key,
 		consumerSecret: config.goodreads.secret,
-		callbackURL: "https://libbie.azurewebsites.net/auth/goodreads/callback",
-		realm: 'https://libbie.azurewebsites.net/'
+		callbackURL: config.serverUrl + "/auth/goodreads/callback",
+		realm: config.serverUrl,
 	},
 	function(token, tokenSecret, profile, done) {
-		console.log("Goodreads User Data: ", profile);
+		// console.log("Goodreads User Data: ", profile);
 		profile.grToken = token;
 		profile.grTokenSecret = tokenSecret;
 		// User.findOrCreate({ goodreadsId: profile.id }, function (err, user) {
