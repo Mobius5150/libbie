@@ -5,7 +5,7 @@ $(document).ready(function(){
 					<span class="isbn">ISBN #{{isbn}}</span> \
 					<span class="title">Title: </span> \
 					<span class="author">Author: </span> \
-					<div class="sources"><a href="#" target="_blank" class="source goodreads"></a></div> \
+					<div class="srcclear"> </div><div class="sources"><a href="#" target="_blank" class="source goodreads"></a></div> \
 				</div> \
 				<div class="clear"></div> \
 			</div> ';

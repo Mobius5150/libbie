@@ -2,8 +2,11 @@
 @headerbgcolor: #074099;
 @headerpadding: 10px;
 
+@sourcesHeight: 30px;
+
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	/* BG Image Source: http://cdn.morguefile.com/imageData/public/files/e/Eamir/04/h/1459985227toasf.jpg */
 	background: url('/img/bg.jpg') fixed;
 	background-size: cover;
 }
@@ -38,20 +41,21 @@ a {
 }
 
 .addedIsbn {
-	border: 3px solid #074099;
+	border: 0px solid #074099;
 	border-radius: 10px;
 	/*background: #074099;*/
 	clear: both;
-	padding: 10px;
+	padding: 0px;
 	margin: 10px 0px;
 	position: relative;
+	overflow: hidden;
 }
 
 .addedIsbn img {
 	width: 100px;
 	float: left;
 	opacity: 0;
-	padding: 5px 20px 5px 5px;
+	padding: 0px 10px 0px 0px;
 }
 
 .addedIsbn span {
@@ -60,8 +64,14 @@ a {
 }
 
 .addedIsbn .sources {
+	position: absolute;
 	bottom: 5px;
 	left: 110px;
+	height: @sourcesHeight;
+}
+
+.addedIsbn .srcclear {
+	height: @sourcesHeight;
 }
 
 .addedIsbn .sources .source {
@@ -69,30 +79,35 @@ a {
 }
 
 .addedIsbn .sources .source.goodreads {
-	background: #eeeeee url('/img/goodreads_logo.png') no-repeat;
+	background: url('/img/goodreads_logo.png') no-repeat;
 	background-size: cover;
 	width: 106.5px;
-	height: 30px;
+	height: @sourcesHeight;
 	border-radius: 10px;
 	opacity: 0.5;
 }
 
 .addedIsbn:nth-last-child(1n+0) {
 	background: rgba(46, 204, 113, @bgopacity);
+	border-color: rgba(46, 204, 113, @bgopacity);
 }
 
 .addedIsbn:nth-last-child(2n+0) {
 	background: rgba(52, 152, 219, @bgopacity);
+	border-color: rgba(52, 152, 219, @bgopacity);
 }
 
 .addedIsbn:nth-last-child(3n+0) {
 	background: rgba(155, 89, 182, @bgopacity);
+	border-color: rgba(155, 89, 182, @bgopacity);
 }
 
 .addedIsbn:nth-last-child(4n+0) {
 	background: rgba(243, 156, 18, @bgopacity);
+	border-color: rgba(243, 156, 18, @bgopacity);
 }
 
 .addedIsbn:nth-last-child(5n+0) {
 	background: rgba(192, 57, 43, @bgopacity);
+	border-color: rgba(192, 57, 43, @bgopacity);
 }

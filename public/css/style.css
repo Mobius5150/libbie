@@ -1,5 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* BG Image Source: http://cdn.morguefile.com/imageData/public/files/e/Eamir/04/h/1459985227toasf.jpg */
   background: url('/img/bg.jpg') fixed;
   background-size: cover;
 }
@@ -28,33 +29,39 @@ a {
   clear: both;
 }
 .addedIsbn {
-  border: 3px solid #074099;
+  border: 0px solid #074099;
   border-radius: 10px;
   /*background: #074099;*/
   clear: both;
-  padding: 10px;
+  padding: 0px;
   margin: 10px 0px;
   position: relative;
+  overflow: hidden;
 }
 .addedIsbn img {
   width: 100px;
   float: left;
   opacity: 0;
-  padding: 5px 20px 5px 5px;
+  padding: 0px 20px 0px 0px;
 }
 .addedIsbn span {
   display: block;
   padding: 5px;
 }
 .addedIsbn .sources {
+  position: absolute;
   bottom: 5px;
   left: 110px;
+  height: 30px;
+}
+.addedIsbn .srcclear {
+  height: 30px;
 }
 .addedIsbn .sources .source {
   display: inline-block;
 }
 .addedIsbn .sources .source.goodreads {
-  background: #eeeeee url('/img/goodreads_logo.png') no-repeat;
+  background: url('/img/goodreads_logo.png') no-repeat;
   background-size: cover;
   width: 106.5px;
   height: 30px;
@@ -63,16 +70,21 @@ a {
 }
 .addedIsbn:nth-last-child(1n+0) {
   background: #2ecc71;
+  border-color: #2ecc71;
 }
 .addedIsbn:nth-last-child(2n+0) {
   background: #3498db;
+  border-color: #3498db;
 }
 .addedIsbn:nth-last-child(3n+0) {
   background: #9b59b6;
+  border-color: #9b59b6;
 }
 .addedIsbn:nth-last-child(4n+0) {
   background: #f39c12;
+  border-color: #f39c12;
 }
 .addedIsbn:nth-last-child(5n+0) {
   background: #c0392b;
+  border-color: #c0392b;
 }
