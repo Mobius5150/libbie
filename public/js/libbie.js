@@ -38,6 +38,12 @@ $(document).ready(function(){
 		$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link[0]).animate({opacity: 1});
 	});
 
+	$(document.body).on('keydown', function(e) {
+		if(document.activeElement.id !== config.isbnInput.id) {
+			config.isbnInput.focus();
+		}
+	});
+
 	config.isbnInput.keypress(function keypressHandler(event) {
 		if (event.key === config.entryKey) {
 			config.isbnInput.focus();
@@ -51,7 +57,6 @@ $(document).ready(function(){
 
 			config.isbnInput.val('');
 
-			console.log("Sending addIsbn request...");
 			socket.emit('addIsbn', {
 				isbn: isbn,
 			});
