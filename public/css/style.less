@@ -1,8 +1,16 @@
 @bgopacity: 1;
+@coverbgopacity: 0.3;
 @headerbgcolor: #074099;
 @headerpadding: 10px;
 
 @sourcesHeight: 30px;
+
+@appwidth: 800px;
+
+@prompt-z-index: 1000;
+@prompt-border: 2px;
+@prompt-border-color: gray;
+@prompt-bg-color: white;
 
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -12,7 +20,7 @@ body {
 }
 
 #application {
-	width: 800px;
+	width: @appwidth;
 	margin: 0 auto;
 }
 
@@ -110,4 +118,80 @@ a {
 .addedIsbn:nth-last-child(5n+0) {
 	background: rgba(192, 57, 43, @bgopacity);
 	border-color: rgba(192, 57, 43, @bgopacity);
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.button {
+	border: 1px solid black;
+	border-radius: 6px;
+	font-weight: bold;
+	padding: 0px 10px;
+	margin: 5px;
+	text-align: center;
+	
+	.button-blue {
+		border-color: blue;
+		background-color: blue;
+		color: white;
+	}
+	
+	.button-green {
+		border-color: green;
+		background-color: green;
+		color: white;
+	}
+	
+	.button-red {
+		border-color: maroon;
+		background-color: maroon;
+		color: white;
+	}
+}
+
+.prompt {
+	z-index: @prompt-z-index;
+	position: absolute;
+	left: 50%;
+	margin-left: -@appwidth/2 - 2*@prompt-border;
+	width: @appwidth;
+	background-color: @prompt-bg-color;
+	border: @prompt-border solid @prompt-border-color;
+	visibility: hidden;
+	display: none;
+}
+
+.prompt-cover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: @prompt-z-index - 1;
+	background-color: rgba(155, 89, 182, @coverbgopacity);
+}
+
+.donation-prompt {
+	.share-buttons {
+		text-align: center;
+		input.button {
+			display: inline-block;
+		}
+	}
+}
+
+.app-welcome-prompt { 
+	.get-started label, .get-started input {
+		display: inline-block;
+	}
 }

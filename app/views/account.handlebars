@@ -1,11 +1,49 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/libbie.js"></script>
 
-	<div id="header">
+	<div id="header" visibility="hidden">
 		<h1>{{title }}</h1>
 		<p>Welcome {{userName }}</p>
-
 		<input type="text" id="isbn" name="isbn" placeholder="ISBN #" />
+	</div>
+	
+	<div class="app-welcome-prompt prompt">
+		<p>
+			<h1>Welcome to Libbie {{userName }}!</h1>
+			Libbie makes logging your library of books in Goodreads faster and easier.
+		</p>
+		<p>
+			Simply sign into Libbie with Goodreads and enter in the ISBN codes into the box. Libbie will add that book to your GR library. You can make this even faster with a <strong>barcode scanner</strong>. Your barcode scanner should work automatically, but if it doesn't, click on the gear icon in the ISBN box to configure it properly.
+		</p>
+		<p>
+			<h3>Watch an introduction video</h3>
+			Want to learn how to use libbie best? Watch this 3 minute intro video and you'll be on your way!
+			<br/>
+			<strong>Video here</strong>
+		</p>
+		<p class="align-right get-started">
+			<label for="dont-show-me">
+				<input type="checkbox" title="Don't show me again" value="dont-show-me" name="dont-show-me" class="dont-show-me" />
+				Don't show me this again
+			</label>
+			<input type="button" title="Get Started" value="Get Started" class="continue button button-green"/>
+		</p>
+	</div>
+
+	<div class="donation-prompt prompt">
+		<p>
+			<h1>Thanks for using Libbie {{userName }}</h1>
+			Thank you for using Libbie. If this tool has helped you, please consider a small donation to help cover the costs of making it available to you.
+		</p>
+		<p>
+			Even a $1 donation helps keep Libbie free! If you can't donate, please consider sharing Libbie with your friends or followers!
+		</p>
+		<div class="share-buttons">
+			<input type="button" value="Share with Facebook" class="share-facbook button button-blue" />
+			<input type="button" value="Share with Twitter" class="share-twitter button button-blue" />
+			<input type="button" value="Donate" class="donate button button-green" />
+			<input type="button" value="Close" class="close button button-red" />
+		</div>
 	</div>
 
 	<div id="searchList">

@@ -37,6 +37,7 @@ module.exports = function initIoServer(cfg, server) {
 
 function socketIoConnected(socket) {
 	socket.on('addIsbn', addIsbn);
+	socket.on('getClientInfo', getClientInfo);
 }
 
 function addIsbn(data) {
@@ -132,4 +133,13 @@ function wrapApi(thisArg, f) {
 	});
 
 	return Q.promise;
+}
+
+function getClientInfo() {
+	// TOOD: Retrieve stored value
+	socket.emit('clientInfo', {
+		entryKey: 'Enter',
+		showWelcomePrompt: true,
+		hasDonated: false,
+	});
 }

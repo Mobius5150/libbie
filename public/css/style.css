@@ -88,3 +88,65 @@ a {
   background: #c0392b;
   border-color: #c0392b;
 }
+.align-right {
+  text-align: right;
+}
+.align-left {
+  text-align: left;
+}
+.align-center {
+  text-align: center;
+}
+.button {
+  border: 1px solid black;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 0px 10px;
+  margin: 5px;
+  text-align: center;
+}
+.button .button-blue {
+  border-color: blue;
+  background-color: blue;
+  color: white;
+}
+.button .button-green {
+  border-color: green;
+  background-color: green;
+  color: white;
+}
+.button .button-red {
+  border-color: maroon;
+  background-color: maroon;
+  color: white;
+}
+.prompt {
+  z-index: 1000;
+  position: absolute;
+  left: 50%;
+  margin-left: -404px;
+  width: 800px;
+  background-color: white;
+  border: 2px solid gray;
+  visibility: hidden;
+  display: none;
+}
+.prompt-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  background-color: rgba(155, 89, 182, 0.3);
+}
+.donation-prompt .share-buttons {
+  text-align: center;
+}
+.donation-prompt .share-buttons input.button {
+  display: inline-block;
+}
+.app-welcome-prompt .get-started label,
+.app-welcome-prompt .get-started input {
+  display: inline-block;
+}
