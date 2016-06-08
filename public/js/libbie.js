@@ -92,7 +92,7 @@
 
 	config.isbnInput.keypress(function keypressHandler(event) {
 		var entryKey = 'Enter';
-		if (typeof account !== 'undefined' && typeof account.entryKey !== 'undefined') {
+		if (account !== null && typeof account.entryKey !== 'undefined') {
 			entryKey = account.entryKey;
 		}
 		
