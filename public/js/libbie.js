@@ -14,7 +14,7 @@
 		welcomePrompt: $('app-welcome-prompt'),
 		donationPrompt: $('donation-welcome-prompt'),
 		donationSearchThreshold: 5,
-		serverUrl: 'http://localhost:3000',
+		serverUrl: 'http://libbie.azurewebsites.net',
 		welcomePromptShown: false,
 		donationPromptShown: false,
 	};
