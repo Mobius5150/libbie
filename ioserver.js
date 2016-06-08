@@ -68,11 +68,11 @@ function addIsbn(data) {
 					});
 				})
 				.fail(function (err) {
-					socket.emit('apperror', { type: 'application', msg: 'Error retrieving book info', data: err });
+					socket.emit('apperror', { type: 'application', msg: 'Error retrieving book info', data: err, book_id: book_id, searchIsbn: data.isbn });
 				});
 		})
 		.fail(function (err) {
-			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err });
+			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err, searchIsbn: data.isbn });
 		});
 }
 
