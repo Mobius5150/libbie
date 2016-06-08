@@ -33,6 +33,10 @@
 		console.log("Server sent error: ", data);
 	});
 
+	socket.on('apperror', function (data) {
+		console.error("Application error: ", data);
+	});
+
 	socket.on('isbnIdentified', function isbnIdentified(data) {
 		console.log("ISBN Identified: ", data);
 
