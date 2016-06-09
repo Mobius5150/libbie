@@ -49,13 +49,6 @@ function socketIoConnected(socket) {
 
 function addIsbn(data) {
 	var socket = this;
-	var grClient = this.request.user.grClient;
-
-	if (typeof grClient === 'undefined') {
-		console.error("Socket does not have a goodreads client", this);
-		this.emit('apperror', { type: 'unauthorized' });
-		return;
-	}
 
 	if (typeof data.isbn !== 'string' || null !== data.isbn.match(/\A([0-9]{10}|[0-9]{13})\Z/)) {
 		this.emit('apperror', { type: 'application', msg: 'No ISBN given in request' });
