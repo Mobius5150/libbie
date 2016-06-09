@@ -54,7 +54,7 @@
 		$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link).animate({opacity: 1});
 	});
 	
-	socket.on('getClientInfo', function getClientInfo(data) {
+	socket.on('clientInfo', function getClientInfo(data) {
 		if (typeof data !== 'object') {
 			console.error("Client info not object.");
 			return;
@@ -178,7 +178,7 @@
 	
 	function runIfUserPropertyEquals(property, desiredValue, callback) {
 		if (account !== null && typeof account[property] !== 'undefined' && account[property] === desiredValue) {
-			callback();
+			callback();	
 		}
 	}
 });
