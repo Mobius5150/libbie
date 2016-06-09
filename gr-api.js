@@ -27,7 +27,6 @@ GoodReadsAPI.prototype = {
         this.limiter.removeTokens(1, function (err, remaining) {
             var thisKey = _this.config.apiKeys[_this.currentApiKey];
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
-            console.log('Request url: ', reqUrl.replace('{{grKey}}', thisKey.key));
             request(reqUrl.replace('{{grKey}}', thisKey.key), handler);
         });
     },
@@ -81,7 +80,6 @@ GoodReadsAPI.prototype = {
     },
 
     bookShow: function bookShow(bookId) {
-        console.log('Bookshow call: ', bookId);
         var _this = this;
         return new promise(function (resolve, reject) {
             _this.wrapApiRequest(_this.config.grApi + '/book/show/' + bookId + '.xml?key={{grKey}}', function (error, response, body) {
