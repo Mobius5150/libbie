@@ -140,7 +140,7 @@ a {
   border: 2px solid gray;
   display: none;
 }
-.prompt-cover {
+#prompt-cover {
   position: absolute;
   top: 0;
   left: 0;
