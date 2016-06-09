@@ -169,7 +169,8 @@
 	
 	function wrapFuncCB(func) {
 		var $this = this;
-		var args = arguments.splice(0, 1);
+		var args = Array.prototype.slice.call(arguments);
+		args.splice(0, 1);
 		return function() {
 			func.apply($this, args);
 		}
