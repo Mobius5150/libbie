@@ -49,11 +49,15 @@
 		}
 
 		// TODO: Should use handlebars
-		$('.addedIsbn.searching.' + data.isbn).replaceWith(template.replace(/\{\{isbn\}\}/g, data.isbn));
-		$('.addedIsbn.' + data.isbn + ' .title').text(book.title);
-		$('.addedIsbn.' + data.isbn + ' .author').text(authors.join(', '));
-		$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url).animate({opacity: 1});
-		$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link).animate({opacity: 1});
+		var img = new Image();
+		img.src = book.image_url;
+		img.onload = function () {
+			$('.addedIsbn.searching.' + data.isbn).replaceWith(template.replace(/\{\{isbn\}\}/g, data.isbn));
+			$('.addedIsbn.' + data.isbn + ' .title').text(book.title);
+			$('.addedIsbn.' + data.isbn + ' .author').text(authors.join(', '));
+			$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url).animate({opacity: 1});
+			$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link).animate({opacity: 1});
+		}
 	});
 	
 	socket.on('clientInfo', function getClientInfo(data) {
