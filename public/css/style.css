@@ -88,23 +88,23 @@ a {
   opacity: 0.5;
 }
 .addedIsbn:nth-last-child(1n+0) {
-  background: #2ecc71;
+  background-color: #2ecc71;
   border-color: #2ecc71;
 }
 .addedIsbn:nth-last-child(2n+0) {
-  background: #3498db;
+  background-color: #3498db;
   border-color: #3498db;
 }
 .addedIsbn:nth-last-child(3n+0) {
-  background: #9b59b6;
+  background-color: #9b59b6;
   border-color: #9b59b6;
 }
 .addedIsbn:nth-last-child(4n+0) {
-  background: #f39c12;
+  background-color: #f39c12;
   border-color: #f39c12;
 }
 .addedIsbn:nth-last-child(5n+0) {
-  background: #c0392b;
+  background-color: #c0392b;
   border-color: #c0392b;
 }
 .align-right {
