@@ -12,6 +12,9 @@
 @prompt-border-color: gray;
 @prompt-bg-color: white;
 
+@spinner-color: white;
+@spin-box-height: 60px;
+
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	/* BG Image Source: http://cdn.morguefile.com/imageData/public/files/e/Eamir/04/h/1459985227toasf.jpg */
@@ -213,7 +216,7 @@ a {
 }
 
 .spinner {
-  margin: 100px auto 0;
+  margin: @spin-box-height/2 0 @spin-box-height/2 auto;
   width: 70px;
   text-align: center;
 }
@@ -221,7 +224,7 @@ a {
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #333;
+  background-color: @spinner-color;
 
   border-radius: 100%;
   display: inline-block;
