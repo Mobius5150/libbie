@@ -150,7 +150,7 @@
 			$('body').append(promptBg);
 			$(prompt).show();
 		} else {
-			$('body').remove('.prompt-cover');
+			$('body').remove('#prompt-cover');
 			$(prompt).hide();
 		}
 	}
