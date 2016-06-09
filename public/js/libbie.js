@@ -50,8 +50,8 @@
 		// TODO: Should use handlebars
 		$('.addedIsbn.' + data.isbn + ' .title').text(book.title);
 		$('.addedIsbn.' + data.isbn + ' .author').text(authors.join(', '));
-		$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url[0]).animate({opacity: 1});
-		$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link[0]).animate({opacity: 1});
+		$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url).animate({opacity: 1});
+		$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link).animate({opacity: 1});
 	});
 	
 	socket.on('getClientInfo', function getClientInfo(data) {
