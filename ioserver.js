@@ -119,7 +119,7 @@ function wrapFnCall($this, method) {
 
 function getClientInfo() {
 	// TOOD: Retrieve stored value
-	socket.emit('clientInfo', {
+	this.emit('clientInfo', {
 		entryKey: 'Enter',
 		showWelcomePrompt: true,
 		hasDonated: false,
