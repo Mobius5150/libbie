@@ -24,10 +24,13 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-oauth": "^1.0.0",
     "passport.socketio": "^3.6.1",
+    "promise": "^7.1.1",
     "q": "^1.4.1",
+    "request": "^2.72.0",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.4.5",
-    "tedious": "^1.14.0"
+    "tedious": "^1.14.0",
+    "xml2js": "^0.4.16"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

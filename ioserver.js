@@ -2,6 +2,7 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var RateLimiter = require('limiter').RateLimiter;
 var q = require('q');
+const grApi = require('./gr-api.js');
 
 var sessionStore     = require('express-session'),
 	passportSocketIo = require("passport.socketio");
@@ -9,12 +10,18 @@ var sessionStore     = require('express-session'),
 var io = null;
 var dbConn = null;
 var config = null;
+var goodreads = null;
 var limiter = new RateLimiter(1, 1000);
-
-var gr = require('goodreads.js');
 
 module.exports = function initIoServer(cfg, server) {
 	config = cfg;
+
+	goodreads = new grApi({
+		apiKeys: [
+			config.goodreads,
+		],
+	});
+
 	io = require('socket.io').listen(server);
 	// dbConn = new Connection(config.database);
 
@@ -57,45 +64,22 @@ function addIsbn(data) {
 
 	console.log('Request for isbn: ', data.isbn);
 	
-	wrapApi(grClient, grClient.BookIsbnToId, data.isbn)
-		.then(function (book_id) {
-			wrapApi(grClient, grClient.BookShow, book_id)
-				.then(function(book) {
-					socket.emit('isbnIdentified', {
-						isbn: data.isbn,
-						books: book.GoodreadsResponse.book,
-						id: book_id,
-					});
-				})
-				.fail(function (err) {
-					socket.emit('apperror', { type: 'application', msg: 'Error retrieving book info', data: err, book_id: book_id, searchIsbn: data.isbn });
-				});
+	goodreads.isbnToBookId(data.isbn)
+		.then(wrapFnCall(goodreads, goodreads.bookShow))
+		.then(function(book) {
+			socket.emit('isbnIdentified', {
+				isbn: data.isbn,
+				books: book.book,
+				id: book_id,
+			})
 		})
-		.fail(function (err) {
+		.catch(function (err) {
 			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err, searchIsbn: data.isbn });
 		});
 }
 
 function onAuthorizeSuccess(data, accept){
 	console.log('successful connection to socket.io', data);
-
-	// var socket = this.conn.Socket;
-	var user = data.user;
-
-	var provider = new gr.provider({
-		'client_key': config.goodreads.key,
-		'client_secret': config.goodreads.secret,
-		
-	});
-	
-	provider.CreateClient({ 'access_token': user.grToken, 'access_token_secret': user.grTokenSecret })
-		.then(function(client){
-			user.grClient = client;
-		})
-		.fail(function(err){
-			console.log("Could not connect goodreads client: ", err);
-		});
-
 	accept(null, true);
 }
 
@@ -133,6 +117,12 @@ function wrapApi(thisArg, f) {
 	});
 
 	return Q.promise;
+}
+
+function wrapFnCall($this, method) {
+    return function () {
+        return method.apply($this, arguments);
+    }
 }
 
 function getClientInfo() {
