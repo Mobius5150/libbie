@@ -59,7 +59,7 @@
 			console.error("Client info not object.");
 			return;
 		}
-		
+		console.log('Got client info');
 		account = data;
 		
 		if (!config.welcomePromptShown) {
@@ -177,7 +177,7 @@
 	}
 	
 	function runIfUserPropertyEquals(property, desiredValue, callback) {
-		if (account !== null && typeof account.property !== 'undefined' && account.property === desiredValue) {
+		if (account !== null && typeof account[property] !== 'undefined' && account[property] === desiredValue) {
 			callback();
 		}
 	}
