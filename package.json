@@ -15,7 +15,6 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
     "glob": "^6.0.4",
-    "goodreads.js": "0.0.8",
     "limiter": "^1.1.0",
     "method-override": "^2.3.0",
     "morgan": "^1.6.1",
