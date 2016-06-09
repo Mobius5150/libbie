@@ -138,7 +138,6 @@ a {
   width: 800px;
   background-color: white;
   border: 2px solid gray;
-  visibility: hidden;
   display: none;
 }
 .prompt-cover {
