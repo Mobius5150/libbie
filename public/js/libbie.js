@@ -154,7 +154,7 @@
 			$('body').append(promptBg);
 			$(prompt).show();
 		} else {
-			$('body').remove('#prompt-cover');
+			$('#prompt-cover').remove();
 			$(prompt).hide();
 		}
 	}
