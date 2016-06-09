@@ -11,8 +11,8 @@
 			</div> ';
 	var config = {
 		isbnInput: $('input#isbn'),
-		welcomePrompt: $('app-welcome-prompt'),
-		donationPrompt: $('donation-welcome-prompt'),
+		welcomePrompt: $('.app-welcome-prompt'),
+		donationPrompt: $('.donation-prompt'),
 		donationSearchThreshold: 5,
 		serverUrl: 'http://libbie.azurewebsites.net',
 		welcomePromptShown: false,
@@ -172,7 +172,7 @@
 		var args = Array.prototype.slice.call(arguments);
 		args.splice(0, 1);
 		return function() {
-			func.apply($this, args);
+			return func.apply($this, args);
 		}
 	}
 	
