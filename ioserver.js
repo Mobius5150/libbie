@@ -17,9 +17,7 @@ module.exports = function initIoServer(cfg, server) {
 	config = cfg;
 
 	goodreads = new grApi({
-		apiKeys: [
-			config.goodreads,
-		],
+		apiKeys: config.goodreads,
 	});
 
 	io = require('socket.io').listen(server);

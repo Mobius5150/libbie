@@ -45,10 +45,16 @@ var googleConfig = {
 	clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 };
 
-var goodreadsConfig = {
-	key: process.env.GOODREADS_KEY,
-	secret: process.env.GOODREADS_SECRET,
-};
+var goodreadsConfig = [];
+
+for (var i = 0; i < 10; ++i) {
+	if (typeof process.env['GOODREADS_KEY' + i] !== 'undefined') {
+		goodreadsConfig.push({
+			key: process.env['GOODREADS_KEY' + i],
+			secret: process.env['GOODREADS_SECRET' + i]
+		})
+	}
+}
 
 var config = {
 	development: {
