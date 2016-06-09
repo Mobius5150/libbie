@@ -9,6 +9,9 @@
 				</div> \
 				<div class="clear"></div> \
 			</div> ';
+
+	var searchingTemplate = '<div class="addedIsbn {{isbn}} searching"></div> ';
+
 	var config = {
 		isbnInput: $('input#isbn'),
 		welcomePrompt: $('.app-welcome-prompt'),
@@ -46,6 +49,7 @@
 		}
 
 		// TODO: Should use handlebars
+		$('.addedIsbn.searching.' + data.isbn).replaceWith(template.replace(/\{\{isbn\}\}/g, isbn));
 		$('.addedIsbn.' + data.isbn + ' .title').text(book.title);
 		$('.addedIsbn.' + data.isbn + ' .author').text(authors.join(', '));
 		$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url).animate({opacity: 1});
@@ -102,7 +106,7 @@
 			config.isbnInput.focus();
 
 			var isbn = parseIsbn(config.isbnInput.val());
-			console.log("Isbn: ", isbn, isbn.length);
+
 			if (!validateIsbn(isbn)) {
 				alert("Invalid isbn!");
 				return;

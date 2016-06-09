@@ -58,6 +58,15 @@ a {
   display: block;
   padding: 5px;
 }
+.addedIsbn.searching {
+  text-align: center;
+  vertical-align: middle;
+  min-height: 60px;
+  background-image: url('/img/loading.gif');
+  background-position: 50% 50%;
+  background-repeat: none;
+  background-size: 60px 60px;
+}
 .addedIsbn .sources {
   position: absolute;
   bottom: 5px;
@@ -147,7 +156,7 @@ a {
   bottom: 0;
   right: 0;
   z-index: 999;
-  background-color: rgba(155, 89, 182, 0.3);
+  background-color: rgba(155, 89, 182, 0.8);
 }
 .donation-prompt .share-buttons {
   text-align: center;
