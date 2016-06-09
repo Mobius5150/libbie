@@ -60,11 +60,15 @@ function addIsbn(data) {
 	goodreads.isbnToBookId(data.isbn)
 		.then(wrapFnCall(goodreads, goodreads.bookShow))
 		.then(function(book) {
+			try {
 			socket.emit('isbnIdentified', {
 				isbn: data.isbn,
 				books: book.book,
-				id: book_id,
-			})
+			});
+			} catch (err) {
+				console.log('Application error:');
+				console.log(err);
+			}
 		})
 		.catch(function (err) {
 			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err, searchIsbn: data.isbn });

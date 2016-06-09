@@ -122,7 +122,7 @@ GoodReadsAPI.prototype = {
 function parseGRXmlResponse(data, callback) {
     parser.parseString(data, function (err, result) {
         if (err || typeof result.GoodreadsResponse !== 'object') {
-            return callback(err);
+            return callback(err ? err : true);
         }
 
         callback(null, removeXmlArrays(result['GoodreadsResponse']));
