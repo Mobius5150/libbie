@@ -25,9 +25,7 @@
 	config.isbnInput.focus();
 
 	var socket = io(config.serverUrl);
-	socket.on('connected', function() {
-		socket.emit('getClientInfo');
-	})
+	socket.emit('getClientInfo');
 	
 	socket.on('error', function (data) {
 		console.log("Server sent error: ", data);
