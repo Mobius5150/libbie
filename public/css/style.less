@@ -1,5 +1,5 @@
 @bgopacity: 1;
-@coverbgopacity: 0.8;
+@coverbg: rgba(89, 89, 89, 0.6);
 @headerbgcolor: #074099;
 @headerpadding: 10px;
 
@@ -8,9 +8,12 @@
 @appwidth: 800px;
 
 @prompt-z-index: 1000;
-@prompt-border: 2px;
-@prompt-border-color: gray;
-@prompt-bg-color: white;
+@prompt-border: 10px;
+@prompt-border-color: black;
+@prompt-bg-color: rgba(155, 89, 182, 1);
+@prompt-border-radius: 30px;
+@prompt-padding-top: 0px;
+@prompt-padding-left: 10px;
 
 @spinner-color: white;
 @spin-box-height: 60px;
@@ -188,6 +191,8 @@ a {
 	width: @appwidth;
 	background-color: @prompt-bg-color;
 	border: @prompt-border solid @prompt-border-color;
+	border-radius: @prompt-border-radius;
+	padding: @prompt-padding-top @prompt-padding-left;
 	display: none;
 }
 
@@ -198,7 +203,7 @@ a {
 	bottom: 0;
 	right: 0;
 	z-index: @prompt-z-index - 1;
-	background-color: rgba(155, 89, 182, @coverbgopacity);
+	background-color: @coverbg;
 }
 
 .donation-prompt {
