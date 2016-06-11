@@ -5,6 +5,7 @@ const RateLimiter = require('limiter').RateLimiter;
 const xml2js = require('xml2js');
 const parser = new xml2js.Parser();
 const util = require('util');
+const OAuth = require('oauth');
 
 var GoodReadsAPI = module.exports = function (config) {
     this.config = _.extend({
