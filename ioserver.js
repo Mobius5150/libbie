@@ -55,8 +55,7 @@ function addIsbn(data) {
 
 	console.log('Request for isbn: ', data.isbn);
 	
-	goodreads.isbnToBookId(data.isbn)
-		.then(wrapFnCall(goodreads, goodreads.bookShow))
+	goodreads.bookShowByIsbn(data.isbn)
 		.then(function(book) {
 			socket.emit('isbnIdentified', {
 				isbn: data.isbn,

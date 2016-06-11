@@ -114,6 +114,43 @@ GoodReadsAPI.prototype = {
                 }
             });
         });
+    },
+
+    bookShowByIsbn: function bookShow(isbn) {
+        var _this = this;
+        return new promise(function (resolve, reject) {
+            _this.wrapApiRequest(_this.config.grApi + '/book/isbn/' + isbn + '?key={{grKey}}', function (error, response, body) {
+                if (error) {
+                    return _this.rejectWithError(reject, error, response, {
+                        message: 'Error processing request',
+                    });
+                }
+
+                switch (response.statusCode) {
+                    case 200:
+                        parseGRXmlResponse(body, function(err, result) {
+                            if (err) {
+                                _this.rejectWithError(reject, err, response, {
+                                    message: 'Error parsing response',
+                                });
+                            } else {
+                                resolve(result);
+                            }
+                        }); 
+                        break;
+
+                    case 404:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Unknown book id',
+                        });
+
+                    default:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Invalid response from goodreads',
+                        });
+                }
+            });
+        });
     }
 };
 
