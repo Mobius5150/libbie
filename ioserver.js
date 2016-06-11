@@ -43,6 +43,7 @@ module.exports = function initIoServer(cfg, server) {
 function socketIoConnected(socket) {
 	socket.on('addIsbn', addIsbn);
 	socket.on('getClientInfo', getClientInfo);
+	socket.on('userNotifications', userNotifications);
 }
 
 function addIsbn(data) {
@@ -64,6 +65,17 @@ function addIsbn(data) {
 		})
 		.catch(function (err) {
 			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err, searchIsbn: data.isbn });
+		});
+}
+
+function userNotifications() {
+	console.log('Request user notifications');
+	goodreads.getUserNotifications({ key: this.request.user.grToken, secret: this.request.user.grTokenSecret})
+		.then(function(info) {
+			socket.emit('userNotifications', info);
+		})
+		.catch(function (err) {
+			socket.emit('apperror', { type: 'application', msg: 'Error getting user notifications', data: err });
 		});
 }
 

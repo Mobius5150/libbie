@@ -29,6 +29,7 @@
 
 	var socket = io(config.serverUrl);
 	socket.emit('getClientInfo');
+	socket.emit('userNotifications');
 	
 	socket.on('error', function (data) {
 		console.log("Server sent error: ", data);
@@ -58,6 +59,10 @@
 			$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url).animate({opacity: 1});
 			$('.addedIsbn.' + data.isbn + ' a.goodreads').attr('href', book.link).animate({opacity: 1});
 		}
+	});
+
+	socket.on('userNotifications', function (data) {
+		console.log('User notifications: ', data);
 	});
 	
 	socket.on('clientInfo', function getClientInfo(data) {
