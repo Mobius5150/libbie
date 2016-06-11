@@ -65,7 +65,7 @@
 			console.error("Client info not object.");
 			return;
 		}
-
+		console.log('Account info: ', data);
 		account = data;
 		
 		if (!config.welcomePromptShown) {
