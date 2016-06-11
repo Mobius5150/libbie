@@ -10,10 +10,22 @@ var GoodReadsAPI = module.exports = function (config) {
     this.config = _.extend({
         grApi: 'https://www.goodreads.com',
         apiKeys: [],
-    },config);
+    }, config);
 
     this.maxRequestsPerSecond = this.config.apiKeys.length;
     this.limiter = new RateLimiter(1, 1000);
+
+    this.config.apiKeys.forEach(function(element) {
+        this.oauthClients.push(new OAuth.OAuth(
+            'http://www.goodreads.com/oauth/request_token',
+            'http://www.goodreads.com/oauth/access_token',
+            element.key,
+            element.secret,
+            '1.0A',
+            null,
+            'HMAC-SHA1'
+        ));
+    }, this);
 }
 
 GoodReadsAPI.prototype = {
@@ -21,13 +33,25 @@ GoodReadsAPI.prototype = {
     limiter: null,
     maxRequestsPerSecond: 0,
     currentApiKey: 0,
+    oauthClients: [],
 
-    wrapApiRequest: function wrapApiRequest(reqUrl, handler) {
+    wrapApiGetRequest: function wrapApiRequest(reqUrl, handler) {
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
             var thisKey = _this.config.apiKeys[_this.currentApiKey];
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
             request(reqUrl.replace('{{grKey}}', thisKey.key), handler);
+        });
+    },
+
+    wrapAuthenticatedApiGetRequest: function wrapAuthenticatedApiRequest(reqUrl, userOauthInfo, handler) {
+        var _this = this;
+        this.limiter.removeTokens(1, function (err, remaining) {
+            var thisKey = _this.config.apiKeys[_this.currentApiKey];
+            _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
+            _this.oauthClients[thisKey].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, function (e, data, response) {
+                handler(e, response, data);
+            });
         });
     },
 
@@ -48,7 +72,7 @@ GoodReadsAPI.prototype = {
     isbnToBookId: function isbnToBookId(isbn) {
         var _this = this;
         return new promise(function (resolve, reject) {
-            _this.wrapApiRequest(_this.config.grApi + '/book/isbn_to_id/' + isbn + '?key={{grKey}}', function (error, response, body) {
+            _this.wrapApiGetRequest(_this.config.grApi + '/book/isbn_to_id/' + isbn + '?key={{grKey}}', function (error, response, body) {
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
@@ -82,7 +106,7 @@ GoodReadsAPI.prototype = {
     bookShow: function bookShow(bookId) {
         var _this = this;
         return new promise(function (resolve, reject) {
-            _this.wrapApiRequest(_this.config.grApi + '/book/show/' + bookId + '.xml?key={{grKey}}', function (error, response, body) {
+            _this.wrapApiGetRequest(_this.config.grApi + '/book/show/' + bookId + '.xml?key={{grKey}}', function (error, response, body) {
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
@@ -119,7 +143,7 @@ GoodReadsAPI.prototype = {
     bookShowByIsbn: function bookShow(isbn) {
         var _this = this;
         return new promise(function (resolve, reject) {
-            _this.wrapApiRequest(_this.config.grApi + '/book/isbn/' + isbn + '?key={{grKey}}', function (error, response, body) {
+            _this.wrapApiGetRequest(_this.config.grApi + '/book/isbn/' + isbn + '?key={{grKey}}', function (error, response, body) {
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
@@ -151,6 +175,43 @@ GoodReadsAPI.prototype = {
                 }
             });
         });
+    },
+
+    getUserNotifications: function getUserNotifications(userOauthInfo) {
+        var _this = this;
+        return new promise(function (resolve, reject) {
+            _this.wrapAuthenticatedApiGetRequest(_this.config.grApi + '/notifications.xml', userOauthInfo, function (error, response, body) {
+                if (error) {
+                    return _this.rejectWithError(reject, error, response, {
+                        message: 'Error processing request',
+                    });
+                }
+
+                switch (response.statusCode) {
+                    case 200:
+                        parseGRXmlResponse(body, function(err, result) {
+                            if (err) {
+                                _this.rejectWithError(reject, err, response, {
+                                    message: 'Error parsing response',
+                                });
+                            } else {
+                                resolve(result);
+                            }
+                        }); 
+                        break;
+
+                    case 404:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Unknown book id',
+                        });
+
+                    default:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Invalid response from goodreads',
+                        });
+                }
+            });
+        });  
     }
 };
 

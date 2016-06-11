@@ -18,6 +18,7 @@
     "limiter": "^1.1.0",
     "method-override": "^2.3.0",
     "morgan": "^1.6.1",
+    "oauth": "^0.9.14",
     "passport": "^0.3.2",
     "passport-goodreads": "^1.0.0",
     "passport-google-oauth20": "^1.0.0",

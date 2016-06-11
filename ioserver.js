@@ -120,5 +120,6 @@ function getClientInfo() {
 		entryKey: 'Enter',
 		showWelcomePrompt: true,
 		hasDonated: false,
+		profile: this.request.user,
 	});
 }
