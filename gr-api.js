@@ -16,18 +16,17 @@ var GoodReadsAPI = module.exports = function (config) {
     this.maxRequestsPerSecond = this.config.apiKeys.length;
     this.limiter = new RateLimiter(1, 1000);
 
-    var _this = this;
-    this.config.apiKeys.forEach(function(element) {
+    for (var i in this.config.apiKeys) {
         _this.oauthClients.push(new OAuth.OAuth(
             'http://www.goodreads.com/oauth/request_token',
             'http://www.goodreads.com/oauth/access_token',
-            element.key,
-            element.secret,
+            this.config.apiKeys[i].key,
+            this.config.apiKeys[i].secret,
             '1.0A',
             null,
             'HMAC-SHA1'
         ));
-    }, this);
+    }
 }
 
 GoodReadsAPI.prototype = {
@@ -50,6 +49,7 @@ GoodReadsAPI.prototype = {
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
             var thisKey = _this.config.apiKeys[_this.currentApiKey];
+            console.log('Select key', thisKey, _this.oauthClients);
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
             _this.oauthClients[thisKey].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, function (e, data, response) {
                 handler(e, response, data);
