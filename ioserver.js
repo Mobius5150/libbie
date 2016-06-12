@@ -48,6 +48,7 @@ function socketIoConnected(socket) {
 
 function addIsbn(data) {
 	var socket = this;
+	var bookId = null;
 
 	if (typeof data.isbn !== 'string' || null !== data.isbn.match(/\A([0-9]{10}|[0-9]{13})\Z/)) {
 		this.emit('apperror', { type: 'application', msg: 'No ISBN given in request' });
@@ -58,25 +59,42 @@ function addIsbn(data) {
 	
 	goodreads.bookShowByIsbn(data.isbn)
 		.then(function(book) {
+			bookId = data.books[0].id;
+
 			socket.emit('isbnIdentified', {
 				isbn: data.isbn,
 				books: book.book,
 			});
+
+			return goodreads.addUserOwnedBook(bookId, userOauthInfo(socket));
+		})
+		.then(function(data) {
+			socket.emit('bookAdded', {
+				isbn: data.isbn,
+				data: data,
+			});
 		})
 		.catch(function (err) {
-			socket.emit('apperror', { type: 'application', msg: 'Error looking up ISBN', data: err, searchIsbn: data.isbn });
+			socket.emit('apperror', { type: 'application', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn });
 		});
 }
 
 function userNotifications() {
 	var socket = this;
-	goodreads.getUserNotifications({ key: this.request.user.grToken, secret: this.request.user.grTokenSecret})
+	goodreads.getUserNotifications(userOauthInfo(socket))
 		.then(function(info) {
 			socket.emit('userNotifications', info);
 		})
 		.catch(function (err) {
 			socket.emit('apperror', { type: 'application', msg: 'Error getting user notifications', data: err });
 		});
+}
+
+function userOauthInfo(socket) {
+	return {
+		key: socket.request.user.grToken,
+		secret: socket.request.user.grTokenSecret
+	};
 }
 
 function onAuthorizeSuccess(data, accept){

@@ -57,6 +57,18 @@ GoodReadsAPI.prototype = {
         });
     },
 
+    wrapAuthenticatedApiPostRequest: function wrapAuthenticatedApiRequest(reqUrl, requestData, userOauthInfo, handler) {
+        var _this = this;
+        this.limiter.removeTokens(1, function (err, remaining) {
+            var thisKeyNo = _this.currentApiKey;
+            var thisKey = _this.config.apiKeys[thisKeyNo];
+            _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
+            _this.oauthClients[thisKeyNo].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, requestData, function (e, data, response) {
+                handler(e, response, data);
+            });
+        });
+    },
+
     rejectWithError: function rejectWithError(reject, error, response, errorObj) {
         if (typeof errorObj === 'undefined') {
             errorObj = {};
@@ -214,7 +226,48 @@ GoodReadsAPI.prototype = {
                 }
             });
         });  
-    }
+    },
+
+    addUserOwnedBook: function addUserOwnedBook(bookId, userOauthInfo) {
+        var _this = this;
+        return new promise(function (resolve, reject) {
+            var request = {
+                'owned_book[book_id]': bookId,
+            };
+
+            _this.wrapAuthenticatedApiPostRequest(_this.config.grApi + '/owned_books.xml', request, userOauthInfo, function (error, response, body) {
+                if (error) {
+                    return _this.rejectWithError(reject, error, response, {
+                        message: 'Error processing request',
+                    });
+                }
+
+                switch (response.statusCode) {
+                    case 200:
+                        parseGRXmlResponse(body, function(err, result) {
+                            if (err) {
+                                _this.rejectWithError(reject, err, response, {
+                                    message: 'Error parsing response',
+                                });
+                            } else {
+                                resolve(result);
+                            }
+                        }); 
+                        break;
+
+                    case 404:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Unknown book id',
+                        });
+
+                    default:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Invalid response from goodreads',
+                        });
+                }
+            });
+        });  
+    },
 };
 
 function parseGRXmlResponse(data, callback) {
@@ -241,4 +294,8 @@ function removeXmlArrays(data) {
     }
 
     return data;
+}
+
+function createPostRequestBody() {
+
 }

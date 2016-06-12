@@ -61,6 +61,10 @@
 		}
 	});
 
+	socket.on('bookAdded', function (data) {
+		console.log('Book added: ', data);
+	});
+
 	socket.on('userNotifications', function (data) {
 		console.log('User notifications: ', data);
 	});
