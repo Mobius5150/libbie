@@ -50,7 +50,6 @@ GoodReadsAPI.prototype = {
         this.limiter.removeTokens(1, function (err, remaining) {
             var thisKeyNo = _this.currentApiKey;
             var thisKey = _this.config.apiKeys[thisKeyNo];
-            console.log('Select key', thisKey, _this.oauthClients);
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
             _this.oauthClients[thisKeyNo].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, function (e, data, response) {
                 handler(e, response, data);
@@ -184,6 +183,7 @@ GoodReadsAPI.prototype = {
         var _this = this;
         return new promise(function (resolve, reject) {
             _this.wrapAuthenticatedApiGetRequest(_this.config.grApi + '/notifications.xml', userOauthInfo, function (error, response, body) {
+                console.log('auth api response: ', error, response, body);
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
