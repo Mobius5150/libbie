@@ -283,6 +283,7 @@ function parseGRXmlResponse(data, rootElementName, callback) {
         rootElementName = 'GoodreadsResponse';
     }
 
+    console.log('Rootelementname: ', rootElementName);
     parser.parseString(data, function (err, result) {
         if (err || (rootElementName !== false && typeof result[rootElementName] !== 'object')) {
             return callback(err ? err : true);
