@@ -63,7 +63,7 @@ GoodReadsAPI.prototype = {
             var thisKeyNo = _this.currentApiKey;
             var thisKey = _this.config.apiKeys[thisKeyNo];
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
-            _this.oauthClients[thisKeyNo].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, requestData, function (e, data, response) {
+            _this.oauthClients[thisKeyNo].post(reqUrl, userOauthInfo.key, userOauthInfo.secret, requestData, function (e, data, response) {
                 handler(e, response, data);
             });
         });

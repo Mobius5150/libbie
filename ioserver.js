@@ -97,8 +97,7 @@ function userOauthInfo(socket) {
 	};
 }
 
-function onAuthorizeSuccess(data, accept){
-	console.log('successful connection to socket.io', data);
+function onAuthorizeSuccess(data, accept) {
 	accept(null, true);
 }
 
