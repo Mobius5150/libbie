@@ -69,7 +69,7 @@ function addIsbn(data) {
 }
 
 function userNotifications() {
-	console.log('Request user notifications');
+	var socket = this;
 	goodreads.getUserNotifications({ key: this.request.user.grToken, secret: this.request.user.grTokenSecret})
 		.then(function(info) {
 			socket.emit('userNotifications', info);
