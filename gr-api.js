@@ -48,10 +48,11 @@ GoodReadsAPI.prototype = {
     wrapAuthenticatedApiGetRequest: function wrapAuthenticatedApiRequest(reqUrl, userOauthInfo, handler) {
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
-            var thisKey = _this.config.apiKeys[_this.currentApiKey];
+            var thisKeyNo = _this.currentApiKey;
+            var thisKey = _this.config.apiKeys[thisKeyNo];
             console.log('Select key', thisKey, _this.oauthClients);
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
-            _this.oauthClients[thisKey].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, function (e, data, response) {
+            _this.oauthClients[thisKeyNo].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, function (e, data, response) {
                 handler(e, response, data);
             });
         });
