@@ -69,6 +69,7 @@ function addIsbn(data) {
 			return goodreads.addUserOwnedBook(bookId, userOauthInfo(socket));
 		})
 		.then(function(addResponse) {
+			console.log('User book added: ', addResponse);
 			socket.emit('bookAdded', {
 				isbn: data.isbn,
 				data: addResponse,
