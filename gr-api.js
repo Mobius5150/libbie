@@ -246,6 +246,10 @@ GoodReadsAPI.prototype = {
 
                 switch (response.statusCode) {
                     case 200:
+                    case 201:
+                    case 202:
+                    case 203:
+                    case 204:
                         parseGRXmlResponse(body, function(err, result) {
                             console.log('Parsed response', err, result);
                             if (err) {
@@ -304,8 +308,4 @@ function removeXmlArrays(data) {
     }
 
     return data;
-}
-
-function createPostRequestBody() {
-
 }
