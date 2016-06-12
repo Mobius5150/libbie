@@ -282,7 +282,9 @@ function parseGRXmlResponse(data, rootElementName, callback) {
             return callback(err ? err : true);
         }
 
-        callback(null, removeXmlArrays(rootElementName ? result[rootElementName] : result));
+        console.log('Parsed xml: ', result);
+
+        callback(null, removeXmlArrays(rootElementName !== false ? result[rootElementName] : result));
     });
 }
 
