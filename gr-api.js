@@ -246,7 +246,7 @@ GoodReadsAPI.prototype = {
 
                 switch (response.statusCode) {
                     case 200:
-                        parseGRXmlResponse(body, function(err, result) {
+                        parseGRXmlResponse(body, false, function(err, result) {
                             if (err) {
                                 _this.rejectWithError(reject, err, response, {
                                     message: 'Error parsing response',
@@ -272,13 +272,18 @@ GoodReadsAPI.prototype = {
     },
 };
 
-function parseGRXmlResponse(data, callback) {
+function parseGRXmlResponse(data, rootElementName, callback) {
+    if (typeof rootElementName === 'function') {
+        callback = rootElementName;
+        rootElementName = 'GoodreadsResponse';
+    }
+
     parser.parseString(data, function (err, result) {
-        if (err || typeof result.GoodreadsResponse !== 'object') {
+        if (err || (rootElementName !== false && typeof result[rootElementName] !== 'object')) {
             return callback(err ? err : true);
         }
 
-        callback(null, removeXmlArrays(result['GoodreadsResponse']));
+        callback(null, removeXmlArrays(rootElementName ? result[rootElementName] : result));
     });
 }
 
