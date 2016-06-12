@@ -242,8 +242,6 @@ GoodReadsAPI.prototype = {
                     });
                 }
 
-                console.log("Response status: ", response.statusCode);
-
                 switch (response.statusCode) {
                     case 200:
                     case 201:
@@ -251,7 +249,6 @@ GoodReadsAPI.prototype = {
                     case 203:
                     case 204:
                         parseGRXmlResponse(body, false, function(err, result) {
-                            console.log('Parsed response', err, result);
                             if (err) {
                                 _this.rejectWithError(reject, err, response, {
                                     message: 'Error parsing response',
@@ -283,15 +280,10 @@ function parseGRXmlResponse(data, rootElementName, callback) {
         rootElementName = 'GoodreadsResponse';
     }
 
-    console.log('Rootelementname: ', rootElementName);
     parser.parseString(data, function (err, result) {
         if (err || (rootElementName !== false && typeof result[rootElementName] !== 'object')) {
             return callback(err ? err : true);
         }
-
-        console.log("Parsed xml response", err, result);
-        console.log("Parsed xml response", rootElementName !== false ? result[rootElementName] : result);
-        console.log('Processed: ', removeXmlArrays(rootElementName !== false ? result[rootElementName] : result));
 
         callback(null, removeXmlArrays(rootElementName !== false ? result[rootElementName] : result));
     });
