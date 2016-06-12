@@ -183,7 +183,6 @@ GoodReadsAPI.prototype = {
         var _this = this;
         return new promise(function (resolve, reject) {
             _this.wrapAuthenticatedApiGetRequest(_this.config.grApi + '/notifications.xml', userOauthInfo, function (error, response, body) {
-                console.log('auth api response: ', error, response, body);
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
@@ -193,6 +192,7 @@ GoodReadsAPI.prototype = {
                 switch (response.statusCode) {
                     case 200:
                         parseGRXmlResponse(body, function(err, result) {
+                            console.log('Parsed response:', err, result);
                             if (err) {
                                 _this.rejectWithError(reject, err, response, {
                                     message: 'Error parsing response',
