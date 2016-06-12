@@ -242,9 +242,11 @@ GoodReadsAPI.prototype = {
                     });
                 }
 
+                console.log("Response status: ", response.statusCode);
+
                 switch (response.statusCode) {
                     case 200:
-                        parseGRXmlResponse(body, false, function(err, result) {
+                        parseGRXmlResponse(body, function(err, result) {
                             console.log('Parsed response', err, result);
                             if (err) {
                                 _this.rejectWithError(reject, err, response, {
