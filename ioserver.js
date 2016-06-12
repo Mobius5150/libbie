@@ -59,7 +59,7 @@ function addIsbn(data) {
 	
 	goodreads.bookShowByIsbn(data.isbn)
 		.then(function(book) {
-			bookId = data.books[0].id;
+			bookId = book.book[0].id;
 
 			socket.emit('isbnIdentified', {
 				isbn: data.isbn,
