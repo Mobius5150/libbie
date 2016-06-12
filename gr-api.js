@@ -250,7 +250,7 @@ GoodReadsAPI.prototype = {
                     case 202:
                     case 203:
                     case 204:
-                        parseGRXmlResponse(body, true, function(err, result) {
+                        parseGRXmlResponse(body, false, function(err, result) {
                             console.log('Parsed response', err, result);
                             if (err) {
                                 _this.rejectWithError(reject, err, response, {
