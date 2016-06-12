@@ -284,11 +284,10 @@ function parseGRXmlResponse(data, rootElementName, callback) {
     }
 
     parser.parseString(data, function (err, result) {
+        console.log('Parsed xml: ', err, result);
         if (err || (rootElementName !== false && typeof result[rootElementName] !== 'object')) {
             return callback(err ? err : true);
         }
-
-        console.log('Parsed xml: ', result);
 
         callback(null, removeXmlArrays(rootElementName !== false ? result[rootElementName] : result));
     });
