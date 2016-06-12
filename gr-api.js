@@ -236,6 +236,8 @@ GoodReadsAPI.prototype = {
             };
 
             _this.wrapAuthenticatedApiPostRequest(_this.config.grApi + '/owned_books.xml', request, userOauthInfo, function (error, response, body) {
+                console.log('Post response: ', error, response, body);
+
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
