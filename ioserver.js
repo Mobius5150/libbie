@@ -100,6 +100,7 @@ function userOauthInfo(socket) {
 
 function onAuthorizeSuccess(data, accept) {
 	var _this = this;
+	console.log('onAuthorizeSuccess called');
 	goodreads.getUserShelves(this.request.user.id)
 		.then(function (shelves) {
 			_this.request.user.shelves = shelves;
