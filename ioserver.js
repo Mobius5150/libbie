@@ -99,7 +99,17 @@ function userOauthInfo(socket) {
 }
 
 function onAuthorizeSuccess(data, accept) {
-	accept(null, true);
+	var _this = this;
+	goodreads.getUserShelves(this.request.user.id)
+		.then(function (shelves) {
+			_this.request.user.shelves = shelves;
+			console.log('User shelves received: ', shelves);
+			accept(null, true);
+		})
+		.catch(function (err) {
+			console.error('Get user shelves error: ', err);
+			accept(null, false);
+		});
 }
 
 function onAuthorizeFail(data, message, error, accept){

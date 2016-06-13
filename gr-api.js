@@ -36,11 +36,26 @@ GoodReadsAPI.prototype = {
     currentApiKey: 0,
     oauthClients: [],
 
-    wrapApiGetRequest: function wrapApiRequest(reqUrl, handler) {
+    wrapApiGetRequest: function wrapApiRequest(reqUrl, requestData, handler) {
+        if (typeof requestData === 'function' && typeof handler === 'undefined') {
+            handler = requestData;
+            requestData = null;
+        }
+
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
             var thisKey = _this.config.apiKeys[_this.currentApiKey];
             _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
+
+            if (null !== requestData) {
+                var params = [];
+                for (var i in requestData) {
+                    params.push(i + '=' + requestData[i]);
+                }
+
+                reqUrl += '?' + params.join('&');
+            }
+
             request(reqUrl.replace('{{grKey}}', thisKey.key), handler);
         });
     },
@@ -208,6 +223,56 @@ GoodReadsAPI.prototype = {
                                 _this.rejectWithError(reject, err, response, {
                                     message: 'Error parsing response',
                                 });
+                            } else {
+                                resolve(result);
+                            }
+                        }); 
+                        break;
+
+                    case 404:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Unknown book id',
+                        });
+
+                    default:
+                        return _this.rejectWithError(reject, error, response, {
+                            message: 'Invalid response from goodreads',
+                        });
+                }
+            });
+        });  
+    },
+
+    getUserShelves: function getUserShelves(userId, page) {
+        if (typeof page === 'undefined') {
+            page = 1;
+        }
+
+        var _this = this,
+            request = {
+                page: page,
+                key: '{{grKey}}',
+                user_id: userId,
+            };
+        return new promise(function (resolve, reject) {
+            _this.wrapApiGetRequest(_this.config.grApi + '/shelf/list.xml', request, function (error, response, body) {
+                if (error) {
+                    return _this.rejectWithError(reject, error, response, {
+                        message: 'Error processing request',
+                    });
+                }
+
+                switch (response.statusCode) {
+                    case 200:
+                        parseGRXmlResponse(body, function(err, result) {
+                            console.log('Shelves response: ', result);
+                            if (err) {
+                                _this.rejectWithError(reject, err, response, {
+                                    message: 'Error parsing response',
+                                });
+                            } else if (parseInt(result.shelves.end) < parseInt(result.shelves.total)) {
+                                console.log('More shelves...');
+                                resolve(result);
                             } else {
                                 resolve(result);
                             }
