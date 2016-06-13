@@ -11,7 +11,9 @@ router.get('/', function (req, res, next) {
 	res.render('account', {
 		title: 'Libbie Alpha Application Account',
 		userName: req.user.displayName,
-		shelves: [],
+		shelves: [
+			{ name: 'Owned books', value: 'owned-books' },
+		],
 		conditions: [
 			{ name: 'brand new', value: 10 },
 			{ name: 'like new', value: 20 },

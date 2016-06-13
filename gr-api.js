@@ -272,7 +272,11 @@ GoodReadsAPI.prototype = {
                                 });
                             } else if (parseInt(result.shelves.end) < parseInt(result.shelves.total)) {
                                 console.log('More shelves...');
-                                resolve(result);
+                                _this.getUserShelves(userId, page + 1)
+                                    .then(mergeShelves(result))
+                                    .then(function(merged) {
+                                        resolve(merged);
+                                    });
                             } else {
                                 resolve(result);
                             }
@@ -368,4 +372,10 @@ function removeXmlArrays(data) {
     }
 
     return data;
+}
+
+function mergeShelves(baseShelves) {
+    return function(shelves) {
+        return [ baseShelves, shelves ];
+    }
 }
