@@ -117,8 +117,10 @@ function onAuthorizeSuccess(data, accept) {
 	console.log('onAuthorizeSuccess called', data);
 	goodreads.getUserShelves(data.user.id)
 		.then(function (shelves) {
+			var util = require('util');
 			data.user.shelves = shelves;
-			console.log('User shelves received: ', shelves);
+			console.log('User shelves received: ');
+			console.log(util.inspect(shelves, false, null));
 			accept(null, true);
 		})
 		.catch(function (err) {
