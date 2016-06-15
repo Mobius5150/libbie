@@ -23,7 +23,10 @@ module.exports = function initIoServer(cfg, server) {
 	});
 
 	goodreadsAccountManager = new AccountManager(config.userData.providers.goodreads);
-	goodreadsAccountManager.init();
+	goodreadsAccountManager.init()
+		.then(function () {
+			io.on('connection', socketIoConnected);
+		});
 
 	io = require('socket.io').listen(server);
 	// dbConn = new Connection(config.database);
@@ -32,7 +35,7 @@ module.exports = function initIoServer(cfg, server) {
 	// 	console.log('Connected to MySQL');
 	// });
 
-	io.on('connection', socketIoConnected);
+	
 
 	//With Socket.io >= 1.0
 	io.use(passportSocketIo.authorize({
