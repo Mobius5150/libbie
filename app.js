@@ -66,10 +66,6 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 function getClientInfoDefaults(id, provider, displayName) {
-	if (typeof id !== 'number') {
-		id = parseInt(id);
-	}
-
 	return {
 		entryKey: 'Enter',
 		showWelcomePrompt: true,
