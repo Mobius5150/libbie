@@ -99,7 +99,6 @@ function userHideWelcomePrompt(hide) {
 	this.request.user.clientInfo.showWelcomePrompt = showWelcomePrompt;
 	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'showWelcomePrompt': showWelcomePrompt })
 		.then(function (clientInfo) {
-			socket.request.user.clientInfo = clientInfo;
 			socket.emit('clientInfo', clientInfo);
 		})
 		.catch(function (err) {
@@ -118,7 +117,7 @@ function onAuthorizeSuccess(data, accept) {
 	var _this = this;
 	goodreads.getUserShelves(data.user.id)
 		.then(function (shelves) {
-			data.user.clientInfo.shelves = shelves.shelves.user_shelf;
+			data.user.shelves = shelves.shelves.user_shelf;
 			accept(null, true);
 		})
 		.catch(function (err) {
@@ -170,5 +169,9 @@ function wrapFnCall($this, method) {
 }
 
 function getClientInfo() {
-	this.emit('clientInfo', this.request.user.clientInfo);
+	var socket = this;
+	goodreadsAccountManager.loadAccount(socket.request.user.id)
+		.then(function(clientInfo) {
+			socket.emit('clientInfo', clientInfo);
+		});
 }

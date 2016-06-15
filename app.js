@@ -46,7 +46,6 @@ function isAuthenticated(req, res, next) {
 		profile.grTokenSecret = tokenSecret;
 		goodreadsAccountManager.loadOrCreateAccount(getClientInfoDefaults(profile.id, 'goodreads', profile.displayName))
 			.then(function (clientInfo) {
-				profile.clientInfo = clientInfo;
 				done(null, profile);
 			})
 			.catch(function(err) {
