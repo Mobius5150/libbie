@@ -165,6 +165,13 @@ a {
 .app-welcome-prompt .get-started input {
   display: inline-block;
 }
+#poweredBy {
+  text-align: right;
+  color: white;
+}
+#poweredBy a {
+  color: white;
+}
 .spinner {
   margin: 30px auto 21px auto;
   width: 70px;
