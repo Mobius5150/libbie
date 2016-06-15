@@ -42,7 +42,7 @@
 		console.error("Application error: ", data);
 
 		if (typeof data.searchIsbn !== 'undefined') {
-			$('.addedIsbn.searching.' + data.isbn).replaceWith(notFoundTemplate.replace(/\{\{isbn\}\}/g, data.isbn));
+			$('.addedIsbn.searching.' + data.searchIsbn).replaceWith(notFoundTemplate.replace(/\{\{isbn\}\}/g, data.searchIsbn));
 		}
 	});
 
