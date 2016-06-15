@@ -70,9 +70,11 @@
 		img.src = book.image_url;
 		img.onload = function () {
 			$('.addedIsbn.searching.' + data.isbn).remove();
-			$('.addedIsbn.loading.' + data.isbn).removeClass('loading');
-			$('.addedIsbn.' + data.isbn + ' img.cover').animate({opacity: 1});
-			$('.addedIsbn.' + data.isbn + ' a.goodreads').animate({opacity: 1});
+			setTimeout(function(){
+				$('.addedIsbn.loading.' + data.isbn).removeClass('loading');
+				$('.addedIsbn.' + data.isbn + ' img.cover').animate({opacity: 1});
+				$('.addedIsbn.' + data.isbn + ' a.goodreads').animate({opacity: 1});
+			}, 0);
 		}
 	});
 
