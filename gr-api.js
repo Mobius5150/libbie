@@ -267,8 +267,6 @@ GoodReadsAPI.prototype = {
                 switch (response.statusCode) {
                     case 200:
                         parseGRXmlResponse(body, function(err, result) {
-                            console.log('Shelves response: ');
-                            console.log(util.inspect(result, false, null));
                             if (err) {
                                 _this.rejectWithError(reject, err, response, {
                                     message: 'Error parsing response',
@@ -374,7 +372,7 @@ function parseGRXmlResponse(data, rootElementName, callback) {
 function removeXmlArrays(data) {
     for (var i in data) {
         if (Object.prototype.toString.call( data[i] ) === '[object Array]') {
-            if (data[i].length === 1 && typeof data[i][0] !== 'object') {
+            if (data[i].length === 1) {
                 if (typeof data[i][0] === 'object' && typeof data[i][0]['$'] !== 'undefined') {
                     var type = typeof data[i][0]['$'].type !== 'undefined' ? data[i][0]['$'].type : 'undefined';
                     if (data[i][0]['$'].nil === 'true') {
@@ -385,6 +383,9 @@ function removeXmlArrays(data) {
                         data[i] = data[i][0]['_'] === 'true' ? true : false;
                     } else {
                         data[i] = data[i][0];
+                        if (typeof data[i] === 'object') {
+                            data[i] = removeXmlArrays(data[i]);
+                        }
                     }
                 } else {
                     data[i] = data[i][0];
