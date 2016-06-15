@@ -61,6 +61,8 @@ a {
 }
 .addedIsbn .addresult span {
   color: white;
+  display: inline;
+  padding: 0;
 }
 .addedIsbn img {
   width: 100px;
