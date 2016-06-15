@@ -13,7 +13,7 @@ var dbConn = null;
 var config = null;
 var goodreads = null;
 var limiter = new RateLimiter(1, 1000);
-var accountManager = null;
+var goodreadsAccountManager = null;
 
 module.exports = function initIoServer(cfg, server) {
 	config = cfg;
@@ -22,8 +22,8 @@ module.exports = function initIoServer(cfg, server) {
 		apiKeys: config.goodreads,
 	});
 
-	accountManager = new AccountManager(config.userData);
-	accountManager.init();
+	goodreadsAccountManager = new AccountManager(this.config.userData.providers.goodreads);
+	goodreadsAccountManager.init();
 
 	io = require('socket.io').listen(server);
 	// dbConn = new Connection(config.database);
@@ -96,7 +96,7 @@ function addIsbn(data) {
 function userWelcomePromptHidden(hidden) {
 	var socket = this;
 	this.request.user.clientInfo.welcomePromptShown = hidden ? true : false;
-	accountManager.setAccountProperties(socket.request.user.id, { 'welcomePromptShown': user.clientInfo.welcomePromptShown })
+	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'welcomePromptShown': user.clientInfo.welcomePromptShown })
 		.then(function (clientInfo) {
 			socket.request.user.clientInfo = clientInfo;
 			socket.emit('clientInfo', clientInfo);

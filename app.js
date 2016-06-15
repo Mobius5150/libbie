@@ -7,9 +7,8 @@ var passport = require('passport');
 var app = express();
 var server = require('http').Server(app);
 const AccountManager = require('./accountmanager.js');
-
-var accountManager = new AccountManager(config.userData);
-accountManager.init();
+var goodreadsAccountManager = new AccountManager(config.userData.providers.goodreads);
+goodreadsAccountManager.init();
 
 server.listen(config.port);
 
@@ -45,7 +44,7 @@ function isAuthenticated(req, res, next) {
 	function(token, tokenSecret, profile, done) {
 		profile.grToken = token;
 		profile.grTokenSecret = tokenSecret;
-		accountManager.loadOrCreateAccount(getClientInfoDefaults(profile.id, 'goodreads', profile.displayName))
+		goodreadsAccountManager.loadOrCreateAccount(getClientInfoDefaults(profile.id, 'goodreads', profile.displayName))
 			.then(function (clientInfo) {
 				profile.clientInfo = clientInfo;
 				done(null, profile);
