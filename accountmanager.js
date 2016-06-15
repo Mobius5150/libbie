@@ -137,9 +137,15 @@ function clientInfoToDBFormat(clientInfo) {
         if (typeof clientInfo[i] === 'string') {
             data[i] = entGen.String(clientInfo[i]);
         } else if (typeof clientInfo[i] === 'number') {
-            data[i] = entGen.Int32(clientInfo[i]);
+            if (clientInfo[i] > (Math.pow(2, 32) - 1)) {
+                data[i] = entGen.Int64(clientInfo[i]);
+            } else {
+                data[i] = entGen.Int32(clientInfo[i]);
+            }
         } else if (typeof clientInfo[i] instanceof Date) {
             data[i] = entGen.DateTime(clientInfo[i]);
+        } else if (typeof clientInfo[i] === 'boolean') {
+            data[i] = entGen.Boolean(clientInfo[i]);
         }
     }
 
