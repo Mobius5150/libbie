@@ -12,23 +12,21 @@ const ValidGRConditionCodes = [ 10, 20, 30, 40, 50, 60 ];
 var GoodReadsAPI = module.exports = function (config) {
     this.config = _.extend({
         grApi: 'https://www.goodreads.com',
-        apiKeys: [],
+        apiKeys: { authenticatedKey: null, requestKeys: [] },
     }, config);
 
     this.maxRequestsPerSecond = this.config.apiKeys.length;
     this.limiter = new RateLimiter(1, 1000);
 
-    for (var i in this.config.apiKeys) {
-        this.oauthClients.push(new OAuth.OAuth(
-            'http://www.goodreads.com/oauth/request_token',
-            'http://www.goodreads.com/oauth/access_token',
-            this.config.apiKeys[i].key,
-            this.config.apiKeys[i].secret,
-            '1.0A',
-            null,
-            'HMAC-SHA1'
-        ));
-    }
+    this.oauthClients.push(new OAuth.OAuth(
+        'http://www.goodreads.com/oauth/request_token',
+        'http://www.goodreads.com/oauth/access_token',
+        this.config.apiKeys.authenticatedKey.key,
+        this.config.apiKeys.authenticatedKey.secret,
+        '1.0A',
+        null,
+        'HMAC-SHA1'
+    ));
 }
 
 GoodReadsAPI.prototype = {
@@ -46,8 +44,8 @@ GoodReadsAPI.prototype = {
 
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
-            var thisKey = _this.config.apiKeys[_this.currentApiKey];
-            _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
+            var thisKey = _this.config.apiKeys.requestKeys[_this.currentApiKey];
+            _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.requestKeys.length;
 
             if (null !== requestData) {
                 var params = [];
@@ -65,9 +63,8 @@ GoodReadsAPI.prototype = {
     wrapAuthenticatedApiGetRequest: function wrapAuthenticatedApiRequest(reqUrl, userOauthInfo, handler) {
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
-            var thisKeyNo = _this.currentApiKey;
-            var thisKey = _this.config.apiKeys[thisKeyNo];
-            _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
+            var thisKeyNo = 0;
+            var thisKey = _this.config.apiKeys.authenticatedKey;
             _this.oauthClients[thisKeyNo].get(reqUrl, userOauthInfo.key, userOauthInfo.secret, function (e, data, response) {
                 handler(e, response, data);
             });
@@ -77,9 +74,8 @@ GoodReadsAPI.prototype = {
     wrapAuthenticatedApiPostRequest: function wrapAuthenticatedApiRequest(reqUrl, requestData, userOauthInfo, handler) {
         var _this = this;
         this.limiter.removeTokens(1, function (err, remaining) {
-            var thisKeyNo = _this.currentApiKey;
-            var thisKey = _this.config.apiKeys[thisKeyNo];
-            _this.currentApiKey = (++_this.currentApiKey) % _this.config.apiKeys.length;
+            var thisKeyNo = 0;
+            var thisKey = _this.config.apiKeys.authenticatedKey;
             _this.oauthClients[thisKeyNo].post(reqUrl, userOauthInfo.key, userOauthInfo.secret, requestData, function (e, data, response) {
                 handler(e, response, data);
             });
