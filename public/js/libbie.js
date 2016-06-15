@@ -52,11 +52,11 @@
 	socket.on('isbnIdentified', function isbnIdentified(data) {
 		console.log("ISBN Identified: ", data);
 
-		var book = data.books[0];console.log(book);
+		var book = data.books[0];
 
 		var authors = [];
 		for (var author in book.authors) {
-			authors.push(book.authors[author].author[0].name);
+			authors.push(book.authors[author].author.name);
 		}
 
 		// TODO: Should use handlebars
