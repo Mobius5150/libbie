@@ -23,10 +23,7 @@ module.exports = function initIoServer(cfg, server) {
 	});
 
 	goodreadsAccountManager = new AccountManager(config.userData.providers.goodreads);
-	goodreadsAccountManager.init()
-		.then(function () {
-			
-		});
+	goodreadsAccountManager.init();
 
 	io = require('socket.io').listen(server);
 	// dbConn = new Connection(config.database);

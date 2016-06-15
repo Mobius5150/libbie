@@ -14,7 +14,7 @@ AccountManager.prototype = {
     init: function init() {
         var _this = this;
         return new promise(function (resolve, reject) {
-            _this.tableService.createTableIfNotExists(config.tableName, function(error, result, response) {
+            _this.tableService.createTableIfNotExists(_this.config.tableName, function(error, result, response) {
                 if (error) {
                     console.error('Error initializing account manager table service', _this.tableService, error);
                     return reject(error);
