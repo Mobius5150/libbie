@@ -151,10 +151,35 @@ function dbFormatToClientInfo(dbFormat) {
     for (var i in dbFormat) {
         if (i === 'RowKey') {
             clientInfo['id'] = dbFormat[i];
-        } else if (i === 'PartitionKey') {
+        } else if (i === 'PartitionKey' || i === '.metadata') {
             continue;
         } else {
-            clientInfo[i] = dbFormat[i];
+            var val = null;
+            var type = typeof dbFormat[i]['$'] === 'undefined' ? 'string' : dbFormat[i]['$']; 
+            switch (type) {
+                case entGen.EdmType.INT64:
+                case entGen.EdmType.INT32:
+                    val = parseInt(dbFormat[i]['_']);
+                    break;
+
+                case entGen.EdmType.DOUBLE:
+                    val = parseFloat(dbFormat[i]['_']);
+                    break;
+
+                case entGen.EdmType.DATETIME:
+                    val = new Date(dbFormat[i]['_']);
+                    break;
+
+                case entGen.EdmType.BOOLEAN:
+                    val = dbFormat[i]['_'] ? true : false;
+                    break;
+
+                default:
+                    val = dbFormat[i]['_'];
+                    break;
+            }
+
+            clientInfo[i] = val;
         }
     }
 
