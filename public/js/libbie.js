@@ -13,6 +13,8 @@
 
 	var searchingTemplate = '<div class="addedIsbn {{isbn}} searching"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div> ';
 
+	var notFoundTemplate = '<div class="addedIsbn {{isbn}} notFound">Could not find book with ISBN #{{isbn}}</div> ';
+
 	var config = {
 		isbnInput: $('input#isbn'),
 		welcomePrompt: $('.app-welcome-prompt'),
@@ -38,6 +40,10 @@
 
 	socket.on('apperror', function (data) {
 		console.error("Application error: ", data);
+
+		if (typeof data.searchIsbn !== 'undefined') {
+			$('.addedIsbn.searching.' + data.isbn).replaceWith(template.replace(/\{\{isbn\}\}/g, data.isbn));
+		}
 	});
 
 	socket.on('isbnIdentified', function isbnIdentified(data) {

@@ -62,6 +62,11 @@ a {
   text-align: center;
   vertical-align: middle;
 }
+.addedIsbn.notFound {
+  text-align: center;
+  vertical-align: middle;
+  min-height: 60px;
+}
 .addedIsbn .sources {
   position: absolute;
   bottom: 5px;
