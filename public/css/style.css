@@ -54,7 +54,7 @@ a {
   border-radius: 10px;
   bottom: 2px;
   color: white;
-  display: inline;
+  display: none;
   padding: 2px 7px;
   position: absolute;
   right: 2px;
@@ -93,13 +93,10 @@ a {
   text-align: center;
   vertical-align: middle;
 }
-.addedIsbn.searching :not(.spinner) {
+.addedIsbn.searching > :not(.spinner) {
   display: none;
 }
 .addedIsbn:not(.searching) .spinner {
-  display: none;
-}
-.addedIsbn.loading {
   display: none;
 }
 .addedIsbn.notFound {
