@@ -84,7 +84,7 @@
 	});
 
 	$(document.body).on('keydown', function(e) {
-		if(document.activeElement.id !== config.isbnInput.id) {
+		if(document.activeElement.id !== config.isbnInput.id && !$(document.activeElement).is('input')) {
 			config.isbnInput.focus();
 		}
 	});
