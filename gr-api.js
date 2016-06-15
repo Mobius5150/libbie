@@ -175,6 +175,7 @@ GoodReadsAPI.prototype = {
         var _this = this;
         return new promise(function (resolve, reject) {
             _this.wrapApiGetRequest(_this.config.grApi + '/book/isbn/' + isbn + '?key={{grKey}}', function (error, response, body) {
+                console.log('Lookup response: ', error, response, body);
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
