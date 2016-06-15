@@ -71,6 +71,7 @@ a {
 }
 .addedIsbn.notFound .isbn {
   color: white;
+  display: inline;
 }
 .addedIsbn .sources {
   position: absolute;
