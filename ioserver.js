@@ -114,13 +114,10 @@ function userOauthInfo(socket) {
 
 function onAuthorizeSuccess(data, accept) {
 	var _this = this;
-	console.log('onAuthorizeSuccess called', data);
 	goodreads.getUserShelves(data.user.id)
 		.then(function (shelves) {
 			var util = require('util');
-			data.user.shelves = shelves;
-			console.log('User shelves received: ');
-			console.log(util.inspect(shelves, false, null));
+			data.user.shelves = shelves.shelves.user_shelves;
 			accept(null, true);
 		})
 		.catch(function (err) {
