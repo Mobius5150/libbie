@@ -6,6 +6,7 @@
     "start": "lessc public/css/style.less > public/css/style.css && node app.js"
   },
   "dependencies": {
+    "azure-storage": "^1.0.1",
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
     "connect-azuretables": "^1.0.14",

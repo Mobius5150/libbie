@@ -3,6 +3,7 @@ var Request = require('tedious').Request;
 var RateLimiter = require('limiter').RateLimiter;
 var q = require('q');
 const grApi = require('./gr-api.js');
+const AccountManager = require('./accountmanager.js');
 
 var sessionStore     = require('express-session'),
 	passportSocketIo = require("passport.socketio");
@@ -12,6 +13,7 @@ var dbConn = null;
 var config = null;
 var goodreads = null;
 var limiter = new RateLimiter(1, 1000);
+var accountManager = null;
 
 module.exports = function initIoServer(cfg, server) {
 	config = cfg;
@@ -19,6 +21,9 @@ module.exports = function initIoServer(cfg, server) {
 	goodreads = new grApi({
 		apiKeys: config.goodreads,
 	});
+
+	accountManager = new AccountManager(config.userData);
+	accountManager.init();
 
 	io = require('socket.io').listen(server);
 	// dbConn = new Connection(config.database);
@@ -89,8 +94,16 @@ function addIsbn(data) {
 }
 
 function userWelcomePromptHidden(hidden) {
-	// TODO: Update account setting 'welcomePromptShown'
-	var welcomePromptShown = hidden ? true : false;
+	var socket = this;
+	this.request.user.clientInfo.welcomePromptShown = hidden ? true : false;
+	accountManager.setAccountProperties(socket.request.user.id, { 'welcomePromptShown': user.clientInfo.welcomePromptShown })
+		.then(function (clientInfo) {
+			socket.request.user.clientInfo = clientInfo;
+			socket.emit('clientInfo', clientInfo);
+		})
+		.catch(function (err) {
+			socket.emit('apperror', { type: 'application', msg: 'Error updating user welcomePromptShown', data: err });
+		});
 }
 
 function userOauthInfo(socket) {
@@ -104,7 +117,7 @@ function onAuthorizeSuccess(data, accept) {
 	var _this = this;
 	goodreads.getUserShelves(data.user.id)
 		.then(function (shelves) {
-			data.user.shelves = shelves.shelves.user_shelf;
+			data.user.clientInfo.shelves = shelves.shelves.user_shelf;
 			accept(null, true);
 		})
 		.catch(function (err) {
@@ -156,17 +169,5 @@ function wrapFnCall($this, method) {
 }
 
 function getClientInfo() {
-	// TOOD: Retrieve stored value
-	this.emit('clientInfo', {
-		entryKey: 'Enter',
-		showWelcomePrompt: true,
-		hasDonated: false,
-		profile: {
-			id: this.request.user.id,
-			logged_in: this.request.user.logged_in,
-			provider: this.request.user.provider,
-			displayName: this.request.user.displayName,
-			shelves: this.request.user.shelves,
-		}
-	});
+	this.emit('clientInfo', this.request.user.clientInfo);
 }

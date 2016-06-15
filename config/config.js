@@ -35,6 +35,15 @@ if (typeof storageConfig.connString === 'string' && storageConfig.connString.len
 	storageConfig.accessKey = connInfo.accountKey;
 }
 
+var userDataConfig = {
+	providers: {
+		goodreads: {
+			storage: storageConfig,
+			tableName: process.env.GR_USER_DATA_TABLE,
+		},
+	},
+};
+
 var sessionConfig = {
 	secret: process.env.SESSION_SECRET,
 	key: 'libbieauth',
@@ -70,6 +79,7 @@ var config = {
 		goodreads: goodreadsConfig,
 		database: dbConfig,
 		storage: storageConfig,
+		userData: userDataConfig,
 	},
 
 	test: {
@@ -85,6 +95,7 @@ var config = {
 		goodreads: goodreadsConfig,
 		database: dbConfig,
 		storage: storageConfig,
+		userData: userDataConfig,
 	},
 
 	production: {
@@ -100,6 +111,7 @@ var config = {
 		goodreads: goodreadsConfig,
 		database: dbConfig,
 		storage: storageConfig,
+		userData: userDataConfig,
 	}
 };
 

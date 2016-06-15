@@ -6,6 +6,10 @@ var passport = require('passport');
 
 var app = express();
 var server = require('http').Server(app);
+const AccountManager = require('./accountmanager.js');
+
+var accountManager = new AccountManager(config.userData);
+accountManager.init();
 
 server.listen(config.port);
 
@@ -28,24 +32,6 @@ function isAuthenticated(req, res, next) {
         res.redirect('/login');
     }
 }
- 
-// (function setupGoogleStrategy(){
-// 	var GoogleStrategy = require('passport-google-oauth20').Strategy;
-// 	passport.use(new GoogleStrategy({
-// 		clientID: config.google.clientId,
-// 		clientSecret: config.google.clientSecret,
-// 		scope: ['profile'],
-// 		callbackURL: "https://libbie.azurewebsites.net/auth/google/callback",
-// 		realm: 'https://libbie.azurewebsites.net/'
-// 	},
-// 	function(token, tokenSecret, profile, done) {
-// 		console.log("Google User Data: ", profile);
-// 	    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-// 	      return done(null, profile);
-// 	    // });
-// 	}
-// 	));
-// })();
 
 (function setupGoodreadsStrategy(){
 	var GoodreadsStrategy = require('passport-goodreads').Strategy;
@@ -57,12 +43,17 @@ function isAuthenticated(req, res, next) {
 		realm: config.serverUrl,
 	},
 	function(token, tokenSecret, profile, done) {
-		// console.log("Goodreads User Data: ", profile);
 		profile.grToken = token;
 		profile.grTokenSecret = tokenSecret;
-		// User.findOrCreate({ goodreadsId: profile.id }, function (err, user) {
-			return done(null, profile);
-		// });
+		accountManager.loadOrCreateAccount(getClientInfoDefaults(profile.id, 'goodreads', profile.displayName))
+			.then(function (clientInfo) {
+				profile.clientInfo = clientInfo;
+				done(null, profile);
+			})
+			.catch(function(err) {
+				console.error('Error with loadOrCreateAccount', err);
+				done(err, null);
+			});
 	}
 	));
 })();
@@ -75,7 +66,13 @@ passport.deserializeUser(function(obj, cb) {
 	cb(null, obj);
 });
 
-// app.listen(config.port, function () {
-// 	console.log('Express server listening on port ' + config.port);
-// });
-
+function getClientInfoDefaults(id, provider, displayName) {
+	return {
+		entryKey: 'Enter',
+		showWelcomePrompt: true,
+		hasDonated: false,
+		id: id,
+		provider: provider,
+		displayName: displayName,
+	};
+}
