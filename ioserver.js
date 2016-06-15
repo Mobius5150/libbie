@@ -161,6 +161,12 @@ function getClientInfo() {
 		entryKey: 'Enter',
 		showWelcomePrompt: true,
 		hasDonated: false,
-		profile: this.request.user,
+		profile: {
+			id: '49626593',
+			logged_in: this.request.user.logged_in,
+			provider: this.request.user.provider,
+			displayName: this.request.user.displayName,
+			shelves: this.request.user.shelves,
+		}
 	});
 }
