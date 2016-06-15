@@ -108,7 +108,6 @@ AccountManager.prototype = {
         var accountEntity = clientInfoToDBFormat(properties);
 
         return new promise(function (resolve, reject) {
-            console.log('Merge object props: ', accountEntity);
             _this.tableService.mergeEntity(_this.config.tableName, accountEntity, function(error, result, response) {
                 if (error) {
                     console.error('Error merging account entity', accountEntity, error);

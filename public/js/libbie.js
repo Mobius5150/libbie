@@ -6,6 +6,7 @@
 					<span class="title">Title: </span> \
 					<span class="author">Author: </span> \
 					<div class="srcclear"> </div><div class="sources"><a href="#" target="_blank" class="source goodreads"></a></div> \
+					<div class="addresult"></div> \
 				</div> \
 				<div class="clear"></div> \
 			</div> ';
@@ -63,6 +64,17 @@
 
 	socket.on('bookAdded', function (data) {
 		console.log('Book added: ', data);
+		var condition = false;
+		
+		if ($('#condition option[value=' + data.condition + ']').length > 0) {
+			condition = ('#condition option[value=' + data.condition + ']').html();
+		}
+
+		if (condition) {
+			$('.addedIsbn.' + data.isbn + ' .addresult').html('Added to owned books in ' + condition + ' condition');
+		} else {
+			$('.addedIsbn.' + data.isbn + ' .addresult').html('Added to owned books');
+		}
 	});
 
 	socket.on('userNotifications', function (data) {
