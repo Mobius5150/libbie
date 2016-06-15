@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 	console.log('User: ', req);
 	res.render('account', {
 		title: 'Libbie: quickly add books to Goodreads!',
-		userName: req.user.displayName,
+		userName: req.user.clientInfo.displayName,
 		shelves: [
 			{ name: 'Owned books', value: 'owned-books' },
 		],
