@@ -95,8 +95,8 @@ GoodReadsAPI.prototype = {
 
         errorObj.error = error;
         errorObj.response = response;
-
-        reject(errorObj);
+        console.log('Rejecting with error: ', errorObj);
+        return reject(errorObj);
     },
 
     /* GoodReads API Functions *****************/
@@ -185,11 +185,11 @@ GoodReadsAPI.prototype = {
                     case 200:
                         parseGRXmlResponse(body, function(err, result) {
                             if (err) {
-                                _this.rejectWithError(reject, err, response, {
+                                return _this.rejectWithError(reject, err, response, {
                                     message: 'Error parsing response',
                                 });
                             } else {
-                                resolve(result);
+                                return resolve(result);
                             }
                         }); 
                         break;
