@@ -18,7 +18,7 @@
 		donationPrompt: $('.donation-prompt'),
 		conditionInput: $('#condition'),
 		donationSearchThreshold: 5,
-		serverUrl: 'http://libbie.azurewebsites.net',
+		serverUrl: '//libbie.azurewebsites.net',
 		welcomePromptShown: false,
 		donationPromptShown: false,
 	};
