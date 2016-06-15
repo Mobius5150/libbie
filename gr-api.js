@@ -175,7 +175,6 @@ GoodReadsAPI.prototype = {
         var _this = this;
         return new promise(function (resolve, reject) {
             _this.wrapApiGetRequest(_this.config.grApi + '/book/isbn/' + isbn + '?key={{grKey}}', function (error, response, body) {
-                console.log('Lookup response: ', error, response, body);
                 if (error) {
                     return _this.rejectWithError(reject, error, response, {
                         message: 'Error processing request',
@@ -371,6 +370,7 @@ function parseGRXmlResponse(data, rootElementName, callback) {
 }
 
 function removeXmlArrays(data) {
+    try {
     for (var i in data) {
         if (Object.prototype.toString.call( data[i] ) === '[object Array]') {
             if (data[i].length === 1) {
@@ -403,6 +403,10 @@ function removeXmlArrays(data) {
     }
 
     return data;
+    } catch (error) {
+        console.error('Error in removeXmlArrays: ', error);
+        throw error;
+    }
 }
 
 function mergeShelves(baseShelves) {
