@@ -49,6 +49,13 @@ function socketIoConnected(socket) {
 function addIsbn(data) {
 	var socket = this;
 	var bookId = null;
+	var addBookRequest = {
+		bookId: null,
+	};
+
+	if (typeof data.condition === 'number') {
+		addBookRequest.condition = data.condition;
+	}
 
 	if (typeof data.isbn !== 'string' || null !== data.isbn.match(/\A([0-9]{10}|[0-9]{13})\Z/)) {
 		this.emit('apperror', { type: 'application', msg: 'No ISBN given in request' });
@@ -59,20 +66,21 @@ function addIsbn(data) {
 	
 	goodreads.bookShowByIsbn(data.isbn)
 		.then(function(book) {
-			bookId = book.book[0].id;
+			addBookRequest.bookId = book.book[0].id;
 
 			socket.emit('isbnIdentified', {
 				isbn: data.isbn,
 				books: book.book,
 			});
 
-			return goodreads.addUserOwnedBook(bookId, userOauthInfo(socket));
+			return goodreads.addUserOwnedBook(addBookRequest, userOauthInfo(socket));
 		})
 		.then(function(addResponse) {
 			console.log('User book added: ', addResponse);
 			socket.emit('bookAdded', {
 				isbn: data.isbn,
 				data: addResponse,
+				request: addBookRequest,
 			});
 		})
 		.catch(function (err) {

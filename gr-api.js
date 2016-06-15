@@ -297,12 +297,22 @@ GoodReadsAPI.prototype = {
         });  
     },
 
-    addUserOwnedBook: function addUserOwnedBook(bookId, userOauthInfo) {
+    addUserOwnedBook: function addUserOwnedBook(addBookRequest, userOauthInfo) {
         var _this = this;
+        if (typeof addBookRequest !== 'object') {
+            addBookRequest = {
+                bookId: addBookRequest,
+            };
+        }
+
         return new promise(function (resolve, reject) {
             var request = {
-                'owned_book[book_id]': bookId,
+                'owned_book[book_id]': addBookRequest.bookId,
             };
+
+            if (typeof addBookRequest.condition === 'number') {
+                request['owned_book[condition_code]'] = addBookRequest.condition;
+            }
 
             _this.wrapAuthenticatedApiPostRequest(_this.config.grApi + '/owned_books.xml', request, userOauthInfo, function (error, response, body) {
                 if (error) {

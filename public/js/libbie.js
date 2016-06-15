@@ -16,6 +16,7 @@
 		isbnInput: $('input#isbn'),
 		welcomePrompt: $('.app-welcome-prompt'),
 		donationPrompt: $('.donation-prompt'),
+		conditionInput: $('#condition'),
 		donationSearchThreshold: 5,
 		serverUrl: 'http://libbie.azurewebsites.net',
 		welcomePromptShown: false,
@@ -131,7 +132,10 @@
 
 			config.isbnInput.val('');
 
+			var condition = parseInt(config.conditionInput.val());
+
 			socket.emit('addIsbn', {
+				condition: condition,
 				isbn: isbn,
 			});
 
