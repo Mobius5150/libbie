@@ -44,6 +44,7 @@ function socketIoConnected(socket) {
 	socket.on('addIsbn', addIsbn);
 	socket.on('getClientInfo', getClientInfo);
 	socket.on('userNotifications', userNotifications);
+	socket.on('userWelcomePromptHidden', userWelcomePromptHidden);
 }
 
 function addIsbn(data) {
@@ -97,6 +98,11 @@ function userNotifications() {
 		.catch(function (err) {
 			socket.emit('apperror', { type: 'application', msg: 'Error getting user notifications', data: err });
 		});
+}
+
+function userWelcomePromptHidden(hidden) {
+	// TODO: Update account setting 'welcomePromptShown'
+	var welcomePromptShown = hidden ? true : false;
 }
 
 function userOauthInfo(socket) {
