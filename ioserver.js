@@ -95,8 +95,9 @@ function addIsbn(data) {
 
 function userWelcomePromptHidden(hidden) {
 	var socket = this;
-	this.request.user.clientInfo.welcomePromptShown = hidden ? true : false;
-	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'welcomePromptShown': user.clientInfo.welcomePromptShown })
+	var welcomePromptShown = hidden ? true : false;
+	this.request.user.clientInfo.welcomePromptShown = welcomePromptShown;
+	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'welcomePromptShown': welcomePromptShown })
 		.then(function (clientInfo) {
 			socket.request.user.clientInfo = clientInfo;
 			socket.emit('clientInfo', clientInfo);
