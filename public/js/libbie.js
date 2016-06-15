@@ -75,8 +75,8 @@
 		console.log('Book added: ', data);
 		var condition = false;
 		
-		if ($('#condition option[value=' + data.condition + ']').length > 0) {
-			condition = ('#condition option[value=' + data.condition + ']').html();
+		if ($('#condition option[value=' + data.request.condition + ']').length > 0) {
+			condition = ('#condition option[value=' + data.request.condition + ']').html();
 		}
 
 		if (condition) {

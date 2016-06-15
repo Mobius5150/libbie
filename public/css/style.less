@@ -75,18 +75,54 @@ a {
 	margin: 10px 0px;
 	position: relative;
 	overflow: hidden;
-}
 
-.addedIsbn img {
-	width: 100px;
-	float: left;
-	opacity: 0;
-	padding: 0px 10px 0px 0px;
-}
+	.addresult {
+		text-align: center;
+		background: #333 none repeat scroll 0 0;
+		border-radius: 10px;
+		bottom: 2px;
+		color: white;
+		display: inline;
+		padding: 2px 7px;
+		position: absolute;
+		right: 2px;
+	}
 
-.addedIsbn span {
-	display: block;
-	padding: 5px;
+	img {
+		width: 100px;
+		float: left;
+		opacity: 0;
+		padding: 0px 10px 0px 0px;
+	}
+
+	span {
+		display: block;
+		padding: 5px;
+	}
+
+	.sources {
+		position: absolute;
+		bottom: 5px;
+		left: 110px;
+		height: @sourcesHeight;
+
+		.source {
+			display: inline-block;
+		}
+
+		.source.goodreads {
+			background: url('/img/goodreads_logo.png') no-repeat;
+			background-size: cover;
+			width: 106.5px;
+			height: @sourcesHeight;
+			border-radius: 10px;
+			opacity: 0.5;
+		}
+	}
+
+	.srcclear {
+		height: @sourcesHeight;
+	}
 }
 
 .addedIsbn.searching {
@@ -105,30 +141,6 @@ a {
 		color: white;
 		display: inline;
 	}
-}
-
-.addedIsbn .sources {
-	position: absolute;
-	bottom: 5px;
-	left: 110px;
-	height: @sourcesHeight;
-}
-
-.addedIsbn .srcclear {
-	height: @sourcesHeight;
-}
-
-.addedIsbn .sources .source {
-	display: inline-block;
-}
-
-.addedIsbn .sources .source.goodreads {
-	background: url('/img/goodreads_logo.png') no-repeat;
-	background-size: cover;
-	width: 106.5px;
-	height: @sourcesHeight;
-	border-radius: 10px;
-	opacity: 0.5;
 }
 
 .addedIsbn:nth-last-child(1n+0) {
