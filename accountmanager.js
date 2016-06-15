@@ -1,5 +1,6 @@
 const azStorage = require('azure-storage');
 const entGen = azStorage.TableUtilities.entityGenerator;
+const azTableTypes = azStorage.TableUtilities.EdmType;
 const promise = require('promise');
 
 var AccountManager = module.exports = function (config) {
@@ -157,20 +158,20 @@ function dbFormatToClientInfo(dbFormat) {
             var val = null;
             var type = typeof dbFormat[i]['$'] === 'undefined' ? 'string' : dbFormat[i]['$']; 
             switch (type) {
-                case entGen.EdmType.INT64:
-                case entGen.EdmType.INT32:
+                case azTableTypes.INT64:
+                case azTableTypes.INT32:
                     val = parseInt(dbFormat[i]['_']);
                     break;
 
-                case entGen.EdmType.DOUBLE:
+                case azTableTypes.DOUBLE:
                     val = parseFloat(dbFormat[i]['_']);
                     break;
 
-                case entGen.EdmType.DATETIME:
+                case azTableTypes.DATETIME:
                     val = new Date(dbFormat[i]['_']);
                     break;
 
-                case entGen.EdmType.BOOLEAN:
+                case azTableTypes.BOOLEAN:
                     val = dbFormat[i]['_'] ? true : false;
                     break;
 
