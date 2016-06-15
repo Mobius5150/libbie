@@ -189,7 +189,6 @@ GoodReadsAPI.prototype = {
                                     message: 'Error parsing response',
                                 });
                             } else {
-                                console.log('Complete result: ', util.inspect(result, false, null));
                                 return resolve(result);
                             }
                         }); 
@@ -365,7 +364,7 @@ function parseGRXmlResponse(data, rootElementName, callback) {
         if (err || (rootElementName !== false && typeof result[rootElementName] !== 'object')) {
             return callback(err ? err : true);
         }
-        console.log('Remove xml arrays from: ', util.inspect(result, false, null));
+
         callback(null, removeXmlArrays(rootElementName !== false ? result[rootElementName] : result));
     });
 }

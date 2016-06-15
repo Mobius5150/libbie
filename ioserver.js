@@ -72,11 +72,11 @@ function addIsbn(data) {
 	goodreads.bookShowByIsbn(data.isbn)
 		.then(
 			function(book) {
-				addBookRequest.bookId = book.book[0].id;
+				addBookRequest.bookId = book.book.id;
 
 				socket.emit('isbnIdentified', {
 					isbn: data.isbn,
-					books: book.book,
+					books: [ book.book ],
 				});
 
 				return goodreads.addUserOwnedBook(addBookRequest, userOauthInfo(socket));
