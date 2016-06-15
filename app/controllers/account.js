@@ -9,7 +9,7 @@ module.exports = function (app) {
 router.get('/', function (req, res, next) {
 	console.log('User: ', req);
 	res.render('account', {
-		title: 'Libbie Alpha Application Account',
+		title: 'Libbie: quickly add books to Goodreads!',
 		userName: req.user.displayName,
 		shelves: [
 			{ name: 'Owned books', value: 'owned-books' },
