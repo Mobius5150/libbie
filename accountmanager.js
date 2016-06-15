@@ -55,11 +55,15 @@ AccountManager.prototype = {
             _this.loadAccount(clientInfoDefaults.id)
                 .then(resolve)
                 .catch(function(err) {
-                    _this.createAccount(clientInfoDefaults)
-                        .then(function (etag) {
-                            return clientInfoDefaults;
-                        })
-                        .catch(reject);
+                    if (err.statusCode === 404) {
+                        _this.createAccount(clientInfoDefaults)
+                            .then(function (etag) {
+                                return resolve(clientInfoDefaults);
+                            })
+                            .catch(reject);
+                    } else {
+                        reject(err);
+                    }
                 });
         });
     },
