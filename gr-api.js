@@ -7,6 +7,8 @@ const parser = new xml2js.Parser();
 const util = require('util');
 const OAuth = require('oauth');
 
+const ValidGRConditionCodes = [ 10, 20, 30, 40, 50, 60 ];
+
 var GoodReadsAPI = module.exports = function (config) {
     this.config = _.extend({
         grApi: 'https://www.goodreads.com',
@@ -310,7 +312,7 @@ GoodReadsAPI.prototype = {
                 'owned_book[book_id]': addBookRequest.bookId,
             };
 
-            if (typeof addBookRequest.condition === 'number') {
+            if (typeof addBookRequest.condition === 'number' && ValidGRConditionCodes.indexOf(addBookRequest.condition) !== -1) {
                 request['owned_book[condition_code]'] = addBookRequest.condition;
             }
 
