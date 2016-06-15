@@ -374,7 +374,17 @@ function removeXmlArrays(data) {
     for (var i in data) {
         if (Object.prototype.toString.call( data[i] ) === '[object Array]') {
             if (data[i].length === 1 && typeof data[i][0] !== 'object') {
-                data[i] = data[i][0];
+                if (typeof data[i][0] === 'object' && typeof data[i][0]['_'] !== 'undefined' && typeof data[i][0]['$'] !== 'undefined') {
+                    if (data[i][0]['$'].nil === 'true') {
+                        data[i] = null;
+                    } else if (data[i][0]['$'].type === 'integer') {
+                        data[i] = parseInt(data[i][0]['_']);
+                    } else if (data[i][0]['$'].type === 'boolean') {
+                        data[i] = data[i][0]['_'] === 'true' ? true : false;
+                    }
+                } else {
+                    data[i] = data[i][0];
+                }
             } else {
                 data[i] = removeXmlArrays(data[i]);
             }
