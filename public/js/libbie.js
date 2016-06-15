@@ -83,9 +83,9 @@
 		}
 
 		if (condition) {
-			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to owned books in ' + condition + ' condition');
+			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to <span class="place-added">owned books</span> in <span class="condition-added">' + condition + '</span> condition');
 		} else {
-			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to owned books');
+			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to <span class="place-added">owned books</span>');
 		}
 
 		$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').fadeIn(config.animateSpeed, function() {
