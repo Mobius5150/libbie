@@ -4,7 +4,7 @@ const promise = require('promise');
 
 var AccountManager = module.exports = function (config) {
 	this.config = config;
-    _this.tableService = azStorage.createTableService(config.storage.storageAccount, _this.config.storage.accessKey);
+    this.tableService = azStorage.createTableService(this.config.storage.storageAccount, this.config.storage.accessKey);
 }
 
 AccountManager.prototype = {
