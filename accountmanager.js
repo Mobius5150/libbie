@@ -151,7 +151,7 @@ function dbFormatToClientInfo(dbFormat) {
 
     for (var i in dbFormat) {
         if (i === 'RowKey') {
-            clientInfo['id'] = dbFormat[i]['_'];
+            clientInfo['id'] = convertTablesType(dbFormat[i]);
         } else if (i === 'PartitionKey' || i === '.metadata') {
             continue;
         } else {
