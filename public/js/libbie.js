@@ -167,7 +167,7 @@
 				isbn: isbn,
 			});
 
-			$('#searchList').prepend(searchingTemplate.replace(/\{\{isbn\}\}/g, isbn));
+			$('#searchList').prepend(template.replace(/\{\{isbn\}\}/g, isbn));
 		}
 	});
 
