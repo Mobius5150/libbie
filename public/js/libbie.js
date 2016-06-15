@@ -24,7 +24,7 @@
 		welcomePromptShown: false,
 		donationPromptShown: false,
 		notFoundCssProperties: { backgroundColor: '#333333' },
-		notFoundAnimateSpeed: 700,
+		animateSpeed: 700,
 	};
 	
 	var account = null;
@@ -44,7 +44,7 @@
 
 		if (typeof data.searchIsbn !== 'undefined') {
 			$('.addedIsbn.searching.' + data.searchIsbn).replaceWith(notFoundTemplate.replace(/\{\{isbn\}\}/g, data.searchIsbn));
-			$('.addedIsbn.notFound.' + data.searchIsbn).animate(config.notFoundCssProperties, config.notFoundAnimateSpeed);
+			$('.addedIsbn.notFound.' + data.searchIsbn).animate(config.notFoundCssProperties, config.animateSpeed);
 		}
 	});
 
@@ -83,10 +83,14 @@
 		}
 
 		if (condition) {
-			$('.addedIsbn.' + data.isbn + ' .addresult').html('Added to owned books in ' + condition + ' condition');
+			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to owned books in ' + condition + ' condition');
 		} else {
-			$('.addedIsbn.' + data.isbn + ' .addresult').html('Added to owned books');
+			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to owned books');
 		}
+
+		$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').fadeIn(config.animateSpeed, function() {
+			$('.addedIsbn.' + data.isbn + ' .addresult').addClass('added');
+		});
 	});
 
 	socket.on('userNotifications', function (data) {
