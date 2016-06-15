@@ -1,5 +1,6 @@
 (typeof $ !== 'undefined' ? $ : jQuery)(document).ready(function($){
-	var template = '<div class="addedIsbn {{isbn}} loading"> \
+	var template = '<div class="addedIsbn {{isbn}} loading searching"> \
+				<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div> \
 				<img class="cover" src=""/> \
 				<div> \
 					<span class="isbn">ISBN #{{isbn}}</span> \
@@ -10,8 +11,6 @@
 				</div> \
 				<div class="clear"></div> \
 			</div> ';
-
-	var searchingTemplate = '<div class="addedIsbn {{isbn}} searching"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div> ';
 
 	var notFoundTemplate = '<div class="addedIsbn {{isbn}} notFound">Could not find book with ISBN <span class="isbn">{{isbn}}</span></div> ';
 
@@ -60,7 +59,6 @@
 		}
 
 		// TODO: Should use handlebars
-		$('.addedIsbn.searching.' + data.isbn).after(template.replace(/\{\{isbn\}\}/g, data.isbn));
 		$('.addedIsbn.' + data.isbn + ' .title').text(book.title);
 		$('.addedIsbn.' + data.isbn + ' .author').text(authors.join(', '));
 		$('.addedIsbn.' + data.isbn + ' img.cover').attr('src', book.image_url);
@@ -69,12 +67,10 @@
 		var img = new Image();
 		img.src = book.image_url;
 		img.onload = function () {
-			$('.addedIsbn.searching.' + data.isbn).remove();
-			setTimeout(function(){
-				$('.addedIsbn.loading.' + data.isbn).removeClass('loading');
-				$('.addedIsbn.' + data.isbn + ' img.cover').animate({opacity: 1});
-				$('.addedIsbn.' + data.isbn + ' a.goodreads').animate({opacity: 1});
-			}, 0);
+			$('.addedIsbn.searching.' + data.isbn).removeClass('searching').removeClass('loading');
+			$('.addedIsbn.loading.' + data.isbn).removeClass('loading');
+			$('.addedIsbn.' + data.isbn + ' img.cover').animate({opacity: 1});
+			$('.addedIsbn.' + data.isbn + ' a.goodreads').animate({opacity: 1});
 		}
 	});
 

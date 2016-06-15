@@ -128,6 +128,16 @@ a {
 .addedIsbn.searching {
 	text-align: center;
 	vertical-align: middle;
+
+	:not(.spinner) {
+		display: none;
+	}
+}
+
+.addedIsbn:not(.searching) {
+	.spinner {
+		display: none;
+	}
 }
 
 .addedIsbn.loading {

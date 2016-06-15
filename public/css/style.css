@@ -48,6 +48,17 @@ a {
   position: relative;
   overflow: hidden;
 }
+.addedIsbn .addresult {
+  text-align: center;
+  background: #333 none repeat scroll 0 0;
+  border-radius: 10px;
+  bottom: 2px;
+  color: white;
+  display: inline;
+  padding: 2px 7px;
+  position: absolute;
+  right: 2px;
+}
 .addedIsbn img {
   width: 100px;
   float: left;
@@ -58,28 +69,10 @@ a {
   display: block;
   padding: 5px;
 }
-.addedIsbn.searching {
-  text-align: center;
-  vertical-align: middle;
-}
-.addedIsbn.notFound {
-  color: #a1a1a1;
-  font-size: 20px;
-  padding: 30px;
-  text-align: center;
-  vertical-align: middle;
-}
-.addedIsbn.notFound .isbn {
-  color: white;
-  display: inline;
-}
 .addedIsbn .sources {
   position: absolute;
   bottom: 5px;
   left: 110px;
-  height: 30px;
-}
-.addedIsbn .srcclear {
   height: 30px;
 }
 .addedIsbn .sources .source {
@@ -92,6 +85,33 @@ a {
   height: 30px;
   border-radius: 10px;
   opacity: 0.5;
+}
+.addedIsbn .srcclear {
+  height: 30px;
+}
+.addedIsbn.searching {
+  text-align: center;
+  vertical-align: middle;
+}
+.addedIsbn.searching :not(.spinner) {
+  display: none;
+}
+.addedIsbn:not(.searching) .spinner {
+  display: none;
+}
+.addedIsbn.loading {
+  display: none;
+}
+.addedIsbn.notFound {
+  color: #a1a1a1;
+  font-size: 20px;
+  padding: 30px;
+  text-align: center;
+  vertical-align: middle;
+}
+.addedIsbn.notFound .isbn {
+  color: white;
+  display: inline;
 }
 .addedIsbn:nth-last-child(1n+0) {
   background-color: #2ecc71;
