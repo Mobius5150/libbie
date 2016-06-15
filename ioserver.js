@@ -48,7 +48,7 @@ module.exports = function initIoServer(cfg, server) {
 function socketIoConnected(socket) {
 	socket.on('addIsbn', addIsbn);
 	socket.on('getClientInfo', getClientInfo);
-	socket.on('userWelcomePromptHidden', userWelcomePromptHidden);
+	socket.on('userHideWelcomePrompt', userHideWelcomePrompt);
 }
 
 function addIsbn(data) {
@@ -93,17 +93,17 @@ function addIsbn(data) {
 		});
 }
 
-function userWelcomePromptHidden(hidden) {
+function userHideWelcomePrompt(hide) {
 	var socket = this;
-	var welcomePromptShown = hidden ? true : false;
-	this.request.user.clientInfo.welcomePromptShown = welcomePromptShown;
-	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'welcomePromptShown': welcomePromptShown })
+	var showWelcomePrompt = hide ? false : true;
+	this.request.user.clientInfo.showWelcomePrompt = showWelcomePrompt;
+	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'showWelcomePrompt': showWelcomePrompt })
 		.then(function (clientInfo) {
 			socket.request.user.clientInfo = clientInfo;
 			socket.emit('clientInfo', clientInfo);
 		})
 		.catch(function (err) {
-			socket.emit('apperror', { type: 'application', msg: 'Error updating user welcomePromptShown', data: err });
+			socket.emit('apperror', { type: 'application', msg: 'Error updating user showWelcomePrompt', data: err });
 		});
 }
 

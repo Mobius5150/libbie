@@ -108,7 +108,7 @@
 	$('.close, .continue', config.welcomePrompt).click(function () {
 		if ($('.dont-show-me', config.welcomePrompt).is(':checked')) {
 			account.welcomePromptShown = true;
-			socket.emit('userWelcomePromptHidden', true);
+			socket.emit('userHideWelcomePrompt', true);
 		}
 
 		showWelcomePrompt(false);
