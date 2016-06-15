@@ -3,11 +3,11 @@
 
 	<div id="header" visibility="hidden">
 		<h1>{{title }}</h1>
-		<p>Add books to <select id="shelf">
+		<p>Add books to <!--<select id="shelf">
 				{{#each shelves}}
             		<option value="{{value}}">{{name}}</option>
 				{{/each}}
-			</select> in 
+			</select> -->in 
 			<select id="condition">
 				{{#each conditions}}
             		<option value="{{value}}">{{name}}</option>
@@ -50,7 +50,13 @@
 		<div class="share-buttons">
 			<input type="button" value="Share with Facebook" class="share-facbook button button-blue" />
 			<input type="button" value="Share with Twitter" class="share-twitter button button-blue" />
-			<input type="button" value="Donate" class="donate button button-green" />
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="Y3M73N38M7WRJ">
+				<input type="submit" name="submit" value="Donate" class="donate button button-green" />
+				<!--<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">-->
+				<!--<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
+			</form>
 			<input type="button" value="Close" class="close button button-red" />
 		</div>
 	</div>
