@@ -24,6 +24,8 @@
 		serverUrl: '//libbie.azurewebsites.net',
 		welcomePromptShown: false,
 		donationPromptShown: false,
+		notFoundCssProperties: { backgroundColor: '#333333' },
+		notFoundAnimateSpeed: 700,
 	};
 	
 	var account = null;
@@ -43,6 +45,7 @@
 
 		if (typeof data.searchIsbn !== 'undefined') {
 			$('.addedIsbn.searching.' + data.searchIsbn).replaceWith(notFoundTemplate.replace(/\{\{isbn\}\}/g, data.searchIsbn));
+			$('.addedIsbn.notFound.' + data.searchIsbn).animate(config.notFoundCssProperties, config.notFoundAnimateSpeed);
 		}
 	});
 
