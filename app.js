@@ -10,8 +10,10 @@ const AccountManager = require('./accountmanager.js');
 var goodreadsAccountManager = new AccountManager(config.userData.providers.goodreads);
 goodreadsAccountManager.init()
 	.then(function() {
-		server.listen(config.port);
+		
 	});
+
+server.listen(config.port);
 
 var AzureTablesStoreFactory = require('connect-azuretables')(session);
 config.session.store = AzureTablesStoreFactory.create(config.storage);
