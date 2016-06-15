@@ -10,7 +10,7 @@
 			</select> -->in 
 			<select id="condition">
 				{{#each conditions}}
-            		<option value="{{value}}">{{name}}</option>
+            		<option value="{{value}}" {{isSelected default}}>{{name}}</option>
 				{{/each}}
 			</select> condition.</p>
 		<input type="number" pattern="[0-9]*" id="isbn" name="isbn" placeholder="ISBN #" />

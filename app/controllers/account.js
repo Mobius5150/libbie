@@ -15,12 +15,18 @@ router.get('/', function (req, res, next) {
 			{ name: 'Owned books', value: 'owned-books' },
 		],
 		conditions: [
+			{ name: 'unspecified', value: 0 },
 			{ name: 'brand new', value: 10 },
-			{ name: 'like new', value: 20 },
+			{ name: 'like new', value: 20, default: true },
 			{ name: 'very good', value: 30 },
 			{ name: 'good', value: 40 },
 			{ name: 'acceptable', value: 50 },
 			{ name: 'poor', value: 60 },
 		],
+		helpers: {
+			isSelected: function (input) {
+				return typeof input !== 'undefined' && input === true ? 'selected' : '';
+			}
+		}
 	});
 });
