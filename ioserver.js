@@ -162,7 +162,7 @@ function getClientInfo() {
 		showWelcomePrompt: true,
 		hasDonated: false,
 		profile: {
-			id: '49626593',
+			id: this.request.user.id,
 			logged_in: this.request.user.logged_in,
 			provider: this.request.user.provider,
 			displayName: this.request.user.displayName,
