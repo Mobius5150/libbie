@@ -30,7 +30,6 @@
 
 	var socket = io(config.serverUrl);
 	socket.emit('getClientInfo');
-	socket.emit('userNotifications');
 	
 	socket.on('error', function (data) {
 		console.log("Server sent error: ", data);
