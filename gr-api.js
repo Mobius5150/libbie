@@ -364,7 +364,7 @@ function parseGRXmlResponse(data, rootElementName, callback) {
         if (err || (rootElementName !== false && typeof result[rootElementName] !== 'object')) {
             return callback(err ? err : true);
         }
-
+        console.log('Remove xml arrays from: ', result);
         callback(null, removeXmlArrays(rootElementName !== false ? result[rootElementName] : result));
     });
 }
