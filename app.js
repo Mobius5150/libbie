@@ -36,8 +36,8 @@ function isAuthenticated(req, res, next) {
 	var GoodreadsStrategy = require('passport-goodreads').Strategy;
 
 	passport.use(new GoodreadsStrategy({
-		consumerKey: config.goodreads[0].key,
-		consumerSecret: config.goodreads[0].secret,
+		consumerKey: config.goodreads.authenticatedKey.key,
+		consumerSecret: config.goodreads.authenticatedKey.secret,
 		callbackURL: config.serverUrl + "/auth/goodreads/callback",
 		realm: config.serverUrl,
 	},
