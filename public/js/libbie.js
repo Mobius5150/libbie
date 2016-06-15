@@ -13,7 +13,7 @@
 
 	var searchingTemplate = '<div class="addedIsbn {{isbn}} searching"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div> ';
 
-	var notFoundTemplate = '<div class="addedIsbn {{isbn}} notFound">Could not find book with ISBN #{{isbn}}</div> ';
+	var notFoundTemplate = '<div class="addedIsbn {{isbn}} notFound">Could not find book with ISBN <span class="isbn">#{{isbn}}</span></div> ';
 
 	var config = {
 		isbnInput: $('input#isbn'),
