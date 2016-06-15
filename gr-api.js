@@ -374,16 +374,22 @@ function removeXmlArrays(data) {
     for (var i in data) {
         if (Object.prototype.toString.call( data[i] ) === '[object Array]') {
             if (data[i].length === 1 && typeof data[i][0] !== 'object') {
-                if (typeof data[i][0] === 'object' && typeof data[i][0]['_'] !== 'undefined' && typeof data[i][0]['$'] !== 'undefined') {
+                if (typeof data[i][0] === 'object' && typeof data[i][0]['$'] !== 'undefined') {
+                    var type = typeof data[i][0]['$'].type !== 'undefined' ? data[i][0]['$'].type : 'undefined';
                     if (data[i][0]['$'].nil === 'true') {
                         data[i] = null;
-                    } else if (data[i][0]['$'].type === 'integer') {
+                    } else if (type === 'integer') {
                         data[i] = parseInt(data[i][0]['_']);
-                    } else if (data[i][0]['$'].type === 'boolean') {
+                    } else if (type === 'boolean') {
                         data[i] = data[i][0]['_'] === 'true' ? true : false;
+                    } else {
+                        data[i] = data[i][0];
                     }
                 } else {
                     data[i] = data[i][0];
+                    if (typeof data[i] === 'object') {
+                        data[i] = removeXmlArrays(data[i]);
+                    }
                 }
             } else {
                 data[i] = removeXmlArrays(data[i]);
