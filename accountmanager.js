@@ -151,38 +151,39 @@ function dbFormatToClientInfo(dbFormat) {
 
     for (var i in dbFormat) {
         if (i === 'RowKey') {
-            clientInfo['id'] = dbFormat[i];
+            clientInfo['id'] = dbFormat[i]['_'];
         } else if (i === 'PartitionKey' || i === '.metadata') {
             continue;
         } else {
-            var val = null;
-            var type = typeof dbFormat[i]['$'] === 'undefined' ? 'string' : dbFormat[i]['$']; 
-            switch (type) {
-                case azTableTypes.INT64:
-                case azTableTypes.INT32:
-                    val = parseInt(dbFormat[i]['_']);
-                    break;
-
-                case azTableTypes.DOUBLE:
-                    val = parseFloat(dbFormat[i]['_']);
-                    break;
-
-                case azTableTypes.DATETIME:
-                    val = new Date(dbFormat[i]['_']);
-                    break;
-
-                case azTableTypes.BOOLEAN:
-                    val = dbFormat[i]['_'] ? true : false;
-                    break;
-
-                default:
-                    val = dbFormat[i]['_'];
-                    break;
-            }
-
-            clientInfo[i] = val;
+            clientInfo[i] = convertTablesType(dbFormat[i]);
         }
     }
 
     return clientInfo;
+}
+
+function convertTablesType(obj) {
+    var val = null;
+    if (typeof obj['$'] === 'undefined') {
+        return obj['_'];
+    }
+
+    var type = obj['$'];
+    switch (type) {
+        case azTableTypes.INT64:
+        case azTableTypes.INT32:
+            return parseInt(obj['_']);
+
+        case azTableTypes.DOUBLE:
+            return parseFloat(obj['_']);
+
+        case azTableTypes.DATETIME:
+            return new Date(obj['_']);
+
+        case azTableTypes.BOOLEAN:
+            return obj['_'] ? true : false;
+
+        default:
+            return obj['_'];
+    }
 }
