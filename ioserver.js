@@ -22,7 +22,7 @@ module.exports = function initIoServer(cfg, server) {
 		apiKeys: config.goodreads,
 	});
 
-	goodreadsAccountManager = new AccountManager(this.config.userData.providers.goodreads);
+	goodreadsAccountManager = new AccountManager(config.userData.providers.goodreads);
 	goodreadsAccountManager.init();
 
 	io = require('socket.io').listen(server);
