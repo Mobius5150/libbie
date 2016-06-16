@@ -212,10 +212,13 @@ a {
   text-decoration: none;
   background-color: #333333;
 }
-.introheader {
+#header.introheader {
+  padding: 1px 10px;
+}
+#header.introheader .introbutton {
   text-align: center;
 }
-.introheader a {
+#header.introheader .introbutton a {
   background-color: #3498db;
   border-radius: 10px;
   color: white;
@@ -226,7 +229,7 @@ a {
   padding: 12px;
   text-decoration: none;
 }
-.introheader a :hover {
+#header.introheader .introbutton a :hover {
   background-color: #2ecc71;
 }
 .spinner {
