@@ -9,8 +9,9 @@ body {
   margin: 0 auto;
   position: relative;
 }
-#application img.pride-flag {
+#application .pride-flag {
   width: 20px;
+  height: 12px;
   position: absolute;
   top: 5px;
   right: 5px;
