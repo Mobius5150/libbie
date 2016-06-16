@@ -9,6 +9,12 @@ body {
   margin: 0 auto;
   position: relative;
 }
+#application img.pride-flag {
+  width: 10px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
 @media (max-width: 1000px) {
   .github-fork-link {
     display: none;
