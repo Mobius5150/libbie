@@ -249,7 +249,7 @@ kbd,
 .isbn-helper .example-isbn {
   float: right;
   padding: 0;
-  max-width: 25%;
+  max-width: 30%;
 }
 .isbn-helper .example-isbn img {
   margin: -41% 0 0;
