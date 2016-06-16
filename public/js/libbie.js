@@ -84,10 +84,11 @@
 			condition = $('#condition option[value=' + data.request.condition + ']').html();
 		}
 
+		var baseText = 'Added to <a href="https://www.goodreads.com/owned_books/user" target="_blank" class="place-added">owned books</a>';
 		if (condition) {
-			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to <span class="place-added">owned books</span> in <span class="condition-added">' + condition + '</span> condition');
+			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html(baseText + ' in <span class="condition-added">' + condition + '</span> condition');
 		} else {
-			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html('Added to <span class="place-added">owned books</span>');
+			$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').html(baseText);
 		}
 
 		$('.addedIsbn.' + data.isbn + ' .addresult:not(.added)').fadeIn(config.animateSpeed, function() {

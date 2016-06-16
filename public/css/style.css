@@ -64,7 +64,8 @@ kbd,
   position: absolute;
   right: 2px;
 }
-.addedIsbn .addresult span {
+.addedIsbn .addresult span,
+.addedIsbn .addresult a {
   color: white;
   display: inline;
   padding: 0;
