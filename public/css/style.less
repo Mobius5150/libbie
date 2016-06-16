@@ -29,6 +29,7 @@ body {
 #application {
 	width: @appwidth;
 	margin: 0 auto;
+	position: relative;
 }
 
 #header {
@@ -306,7 +307,12 @@ kbd, .key {
 }
 
 .isbn-helper {
-	max-width: 80%;
+	margin: 10px auto;
+	max-width: @appwidth*0.8;
+	color: white;
+	padding: 0 0 0 10px;
+	position: absolute !important;
+	left: @appwidth*0.1;
 
 	img.example-isbn {
 		float: right;
@@ -315,7 +321,12 @@ kbd, .key {
 	}
 
 	.barcode-scanner {
-		font-size: 8px;
+		font-size: 10px;
+
+		a {
+			color: #333333;
+			font-weight: bold;
+		}
 	}
 }
 
