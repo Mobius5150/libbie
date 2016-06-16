@@ -229,7 +229,7 @@ a {
   padding: 12px;
   text-decoration: none;
 }
-#header.introheader .introbutton a :hover {
+#header.introheader .introbutton a:hover {
   background-color: #2ecc71;
 }
 .spinner {
