@@ -114,7 +114,7 @@
 	});
 
 	$(document.body).on('keydown', function(e) {
-		if(document.activeElement.id !== config.isbnInput.id && !$(document.activeElement).is('input, select')) {
+		if(document.activeElement.id !== config.isbnInput.id && !e.metaKey && !e.shiftKey && !e.ctrlKey && !$(document.activeElement).is('input, select')) {
 			config.isbnInput.focus();
 		}
 	});
