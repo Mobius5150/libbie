@@ -388,6 +388,8 @@ function removeXmlArrays(data) {
                     if (typeof data[i] === 'object') {
                         data[i] = removeXmlArrays(data[i]);
                     }
+                } else {
+                    data[i] = removeXmlArrays(data[i]);
                 }
             } else {
                 data[i] = removeXmlArrays(data[i]);
