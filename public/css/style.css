@@ -158,9 +158,10 @@ kbd,
   border: 1px solid black;
   border-radius: 6px;
   font-weight: bold;
-  padding: 0px 10px;
+  padding: 3px 20px;
   margin: 5px;
   text-align: center;
+  cursor: pointer;
 }
 .button-blue {
   border-color: blue;
