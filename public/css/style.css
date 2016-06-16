@@ -244,11 +244,17 @@ kbd,
   padding: 0 0 0 10px;
   position: absolute !important;
   left: 80px;
+  z-index: 2;
 }
-.isbn-helper img.example-isbn {
+.isbn-helper .example-isbn {
   float: right;
-  padding: 10px;
+  padding: 0 10px 0 0;
   max-width: 25%;
+}
+.isbn-helper .example-isbn img {
+  margin: -35% 0 0;
+  max-width: 100%;
+  padding: 50% 0 0;
 }
 .isbn-helper .barcode-scanner {
   font-size: 10px;

@@ -313,11 +313,18 @@ kbd, .key {
 	padding: 0 0 0 10px;
 	position: absolute !important;
 	left: @appwidth*0.1;
+	z-index: 2;
 
-	img.example-isbn {
+	.example-isbn {
 		float: right;
-		padding: 10px;
+		padding: 0 10px 0 0;
 		max-width: 25%;
+
+		img {
+			margin: -35% 0 0;
+			max-width: 100%;
+			padding: 50% 0 0;
+		}
 	}
 
 	.barcode-scanner {
