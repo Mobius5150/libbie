@@ -178,6 +178,10 @@ kbd,
   background-color: maroon;
   color: white;
 }
+.button.donate {
+  font-size: 15px;
+  padding: 10px 50px;
+}
 .prompt {
   z-index: 1000;
   position: absolute;
