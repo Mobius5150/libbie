@@ -35,6 +35,10 @@ input::-webkit-inner-spin-button {
 a {
   color: #00B7FF;
 }
+kbd,
+.key {
+  text-transform: capitalize;
+}
 .clear {
   clear: both;
 }
