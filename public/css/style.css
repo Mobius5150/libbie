@@ -9,7 +9,7 @@ body {
   margin: 0 auto;
   position: relative;
 }
-@media (max-width: 800px+100) {
+@media (max-width: 900px) {
   .github-fork-link {
     display: none;
   }
