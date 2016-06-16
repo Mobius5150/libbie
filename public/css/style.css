@@ -70,6 +70,10 @@ kbd,
   display: inline;
   padding: 0;
 }
+.addedIsbn .addresult a:hover,
+.addedIsbn .addresult a:active {
+  color: #a1a1a1;
+}
 .addedIsbn img {
   width: 100px;
   float: left;
