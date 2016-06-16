@@ -7,6 +7,7 @@ body {
 #application {
   width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 #header {
   color: white;
@@ -237,7 +238,12 @@ kbd,
   background-color: #3498db;
 }
 .isbn-helper {
-  max-width: 80%;
+  margin: 10px auto;
+  max-width: 640px;
+  color: white;
+  padding: 0 0 0 10px;
+  position: absolute !important;
+  left: 80px;
 }
 .isbn-helper img.example-isbn {
   float: right;
@@ -245,7 +251,11 @@ kbd,
   max-width: 25%;
 }
 .isbn-helper .barcode-scanner {
-  font-size: 8px;
+  font-size: 10px;
+}
+.isbn-helper .barcode-scanner a {
+  color: #333333;
+  font-weight: bold;
 }
 .arrow_box {
   position: relative;
