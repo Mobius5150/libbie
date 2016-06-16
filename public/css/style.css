@@ -162,17 +162,17 @@ kbd,
   margin: 5px;
   text-align: center;
 }
-.button .button-blue {
+.button-blue {
   border-color: blue;
   background-color: blue;
   color: white;
 }
-.button .button-green {
-  border-color: green;
-  background-color: green;
+.button-green {
+  border-color: #219452;
+  background-color: #2ecc71;
   color: white;
 }
-.button .button-red {
+.button-red {
   border-color: maroon;
   background-color: maroon;
   color: white;
