@@ -19,6 +19,7 @@
 		welcomePrompt: $('.app-welcome-prompt'),
 		donationPrompt: $('.donation-prompt'),
 		conditionInput: $('#condition'),
+		isbnHelper: $('.isbn-helper'),
 		donationSearchThreshold: 5,
 		serverUrl: '//libbie.azurewebsites.net',
 		welcomePromptShown: false,
@@ -29,6 +30,7 @@
 	
 	var account = null;
 	var numSearches = 0;
+	var helperVisible = true;
 
 	config.isbnInput.focus();
 
@@ -172,6 +174,11 @@
 			});
 
 			$('#searchList').prepend(template.replace(/\{\{isbn\}\}/g, isbn));
+
+			if (helperVisible) {
+				config.isbnHelper.fadeOut(config.animateSpeed);
+				helperVisible = false;
+			}
 		}
 	});
 

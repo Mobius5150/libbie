@@ -248,11 +248,11 @@ kbd,
 }
 .isbn-helper .example-isbn {
   float: right;
-  padding: 0 10px 0 0;
+  padding: 0;
   max-width: 25%;
 }
 .isbn-helper .example-isbn img {
-  margin: -35% 0 0;
+  margin: -41% 0 0;
   max-width: 100%;
   padding: 50% 0 0;
 }
