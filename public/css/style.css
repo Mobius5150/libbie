@@ -219,7 +219,7 @@ a {
   text-align: center;
 }
 #header.introheader .introbutton a {
-  background-color: #3498db;
+  background-color: #2ecc71;
   border-radius: 10px;
   color: white;
   display: block;
@@ -230,7 +230,7 @@ a {
   text-decoration: none;
 }
 #header.introheader .introbutton a:hover {
-  background-color: #2ecc71;
+  background-color: #3498db;
 }
 .spinner {
   margin: 30px auto 21px auto;
