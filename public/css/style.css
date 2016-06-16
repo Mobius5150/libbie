@@ -164,8 +164,8 @@ kbd,
   cursor: pointer;
 }
 .button-blue {
-  border-color: blue;
-  background-color: blue;
+  border-color: #074099;
+  background-color: #074099;
   color: white;
 }
 .button-green {
