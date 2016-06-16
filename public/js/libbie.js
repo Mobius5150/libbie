@@ -208,22 +208,37 @@
 	var promptBg = '<div id="prompt-cover"></div>'
 	function showPrompt(prompt, show) {
 		if (show) {
-			$('body').append(promptBg);
+			if ($('#prompt-cover').length === 0) {
+				$('body').append(promptBg);
+			}
+
 			$(prompt).show();
 		} else {
 			$('#prompt-cover').remove();
 			$(prompt).hide();
 		}
 	}
+
+	function hideAllPrompts() {
+		$('.prompt').hide();
+	}
 	
 	function showWelcomePrompt(show) {
+		hideAllPrompts();
 		config.welcomePromptShown |= show;
 		showPrompt(config.welcomePrompt, show);
 	}
 	
 	function showDonationPrompt(show) {
+		hideAllPrompts();
 		config.donationPromptShown |= show;
 		showPrompt(config.donationPrompt, show);
+
+		if (show) {
+			window.location.hash = '#donate';
+		} else {
+			window.location.hash = '';
+		}
 	}
 	
 	function wrapFuncCB(func) {
@@ -239,5 +254,16 @@
 		if (account !== null && typeof account[property] !== 'undefined' && account[property] === desiredValue) {
 			callback();	
 		}
+	}
+
+	switch (window.location.hash) {
+		case '':
+			break;
+		case '#welcome':
+			showWelcomePrompt(true);
+			break;
+		case '#donate':
+			showDonationPrompt(true);
+			break;
 	}
 });
