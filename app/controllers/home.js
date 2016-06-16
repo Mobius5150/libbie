@@ -7,6 +7,6 @@ module.exports = function (app) {
 
 router.get('/', function (req, res, next) {
 	res.render('index', {
-		title: 'Libbie Alpha Application',
+		title: 'Libbie: quickly add books to Goodreads!',
 	});
 });
