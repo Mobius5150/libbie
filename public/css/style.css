@@ -16,6 +16,7 @@ body {
   top: 5px;
   right: 5px;
   border-radius: 2px;
+  z-index: 2;
 }
 @media (max-width: 1000px) {
   .github-fork-link {
@@ -27,6 +28,7 @@ body {
   background-color: #074099;
   border-radius: 5px 5px 5px 0;
   padding: 1px 10px 0 10px;
+  position: relative;
 }
 .smartScanRunning #header {
   background-color: #ff3f0d;
@@ -50,7 +52,7 @@ input::-webkit-inner-spin-button {
   /* <-- Apparently some margin are still there even though it's hidden */
 }
 .smartscan {
-  bottom: 37px;
+  bottom: 18px;
   color: #999;
   font-size: 20px !important;
   position: absolute;
@@ -62,7 +64,7 @@ input::-webkit-inner-spin-button {
   background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff));
   border: 1px solid #bbb;
   border-radius: 5px;
-  bottom: 31px;
+  bottom: 12px;
   padding: 5px 8px 5px 10px;
   right: 11px;
   cursor: pointer;
