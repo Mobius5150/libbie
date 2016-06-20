@@ -184,6 +184,7 @@
 		var eventKeyString = buildEventKeyString(event);
 		console.log('Event key string: ', eventKeyString)
 		if (smartScanRunning && validateIsbn(isbn)) {
+			console.log('Smart scan identified key combo: ', eventKeyString);
 			endSmartScan();
 			entryKey = account.entryKey = eventKeyString;
 			socket.emit('setUserEntryKey', eventKeyString);
