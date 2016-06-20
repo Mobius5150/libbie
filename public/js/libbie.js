@@ -176,7 +176,11 @@
 		$('#application').removeClass('smartScanRunning');
 	}
 
-	config.isbnInput.keypress(function keypressHandler(event) {
+	config.isbnInput.keypress(function keypressHandler(event, isCallback) {
+		if (typeof isCallback !== 'boolean') {
+			isCallback = false;
+		}
+
 		var entryKey = 'Enter';
 		if (account !== null && typeof account.entryKey !== 'undefined') {
 			entryKey = account.entryKey;
@@ -186,9 +190,9 @@
 		var eventKeyString = buildEventKeyString(event);
 		console.log('Event key string: ', eventKeyString, isbn, validateIsbn(isbn))
 		if (smartScanRunning && validateIsbn(isbn)) {
-			if (isbn.length < 13 && null === smartScanShortIsbnTimeout) {
+			if (isbn.length < 13 && !isCallback) {
 				smartScanShortIsbnTimeout = setTimeout(function () {
-					keypressHandler.call(config.isbnInput, event);
+					keypressHandler.call(config.isbnInput, event, true);
 				}, config.smartScanShortIsbnTimeout);
 				return;
 			}
