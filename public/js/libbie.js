@@ -33,7 +33,7 @@
 	var numSearches = 0;
 	var numVisibleSearches = 0;
 	var helperVisible = true;
-	var smartScanRunning = false;
+	var smartScanRunning = false, smartScanInterval = null;
 
 	config.isbnInput.focus();
 
@@ -154,11 +154,23 @@
 
 		$('#application').addClass('smartScanRunning');
 		config.isbnInput.attr('data-old-placeholder', config.isbnInput.attr('placeholder'));
-		config.isbnInput.attr('placeholder', 'Smart scan running... Re-scan barcode');
+		config.isbnInput.attr('placeholder', 'Smart scan running... Re-scan barcode.');
+
+		smartScanInterval = setInterval(function(){
+			var newText = config.isbnInput.attr('placeholder') + '.';
+
+			if (newText[newText.length - 4] === '.') {
+				newText = 'Smart scan running... Re-scan barcode.';
+			}
+
+			config.isbnInput.attr('placeholder', newText);
+		}, 1000);
 	}
 
 	function endSmartScan() {
 		smartScanRunning = false;
+		clearInterval(smartScanInterval);
+		smartScanInterval = null;
 		config.isbnInput.attr('placeholder', config.isbnInput.attr('data-old-placeholder'));
 		$('#application').removeClass('smartScanRunning');
 	}
