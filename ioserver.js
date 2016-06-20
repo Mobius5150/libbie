@@ -69,33 +69,45 @@ function addIsbn(data) {
 
 	console.log('Request for isbn: ', data.isbn);
 	
-	goodreads.bookShowByIsbn(data.isbn)
-		.then(
-			function(book) {
-				addBookRequest.bookId = book.book.id;
+	function doRequest(requestNo) {
+		goodreads.bookShowByIsbn(data.isbn)
+			.then(
+				function(book) {
+					addBookRequest.bookId = book.book.id;
 
-				socket.emit('isbnIdentified', {
-					isbn: data.isbn,
-					books: [ book.book ],
-				});
+					socket.emit('isbnIdentified', {
+						isbn: data.isbn,
+						books: [ book.book ],
+					});
 
-				return goodreads.addUserOwnedBook(addBookRequest, userOauthInfo(socket));
-			},
-			function(err) {
-				socket.emit('apperror', { type: 'application', msg: 'Error looking up book', data: err, searchIsbn: data.isbn });
-			})
-		.then(
-			function(addResponse) {
-				console.log('User book added: ', addResponse);
-				socket.emit('bookAdded', {
-					isbn: data.isbn,
-					data: addResponse,
-					request: addBookRequest,
+					return goodreads.addUserOwnedBook(addBookRequest, userOauthInfo(socket));
+				},
+				function(err) {
+					if (requestNo < config.goodreads.maxRetries) {
+						doRequest(requestNo + 1);
+					} else {
+						socket.emit('apperror', { type: 'application', msg: 'Error looking up book', data: err, searchIsbn: data.isbn });
+					}
+				})
+			.then(
+				function(addResponse) {
+					console.log('User book added: ', addResponse);
+					socket.emit('bookAdded', {
+						isbn: data.isbn,
+						data: addResponse,
+						request: addBookRequest,
+					});
+				},
+				function (err) {
+					if (requestNo < config.goodreads.maxRetries) {
+						doRequest(requestNo + 1);
+					} else {
+						socket.emit('apperror', { type: 'application', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn });
+					}
 				});
-			},
-			function (err) {
-				socket.emit('apperror', { type: 'application', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn });
-			});
+	}
+
+	doRequest(0);
 }
 
 function userHideWelcomePrompt(hide) {

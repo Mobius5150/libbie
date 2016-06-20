@@ -60,6 +60,7 @@ var goodreadsConfig = {
 		secret: process.env['GOODREADS_SECRET0'],
 	},
 	requestKeys: [],
+	maxRetries: 3,
 };
 
 for (var i = 1; i < 10; ++i) {
