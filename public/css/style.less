@@ -25,6 +25,8 @@
 @spin-box-height: 60px;
 @spinner-height: 18px;
 
+@smartScanColor: #ff3f0d;
+
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	/* BG Image Source: http://cdn.morguefile.com/imageData/public/files/e/Eamir/04/h/1459985227toasf.jpg */
@@ -63,16 +65,16 @@ body {
 }
 
 #header.smartScanRunning {
-	background-color: #ff3f0d;
+	background-color: @smartScanColor;
 }
 
 input#isbn {
 	width: 774px;
 	font-size: 24px;
 	padding: 10px;
-	border: 3px solid @headerbgcolor;
+	border: 0px;
 	border-radius: 5px;
-	margin: 0 -@headerpadding;
+	margin: 3px -@headerpadding+3px;
 }
 
 input[type='number'] {
@@ -375,6 +377,10 @@ kbd, .key {
     float: left;
     padding: 0 5px 5px;
 	font-size: 0.9em;
+}
+
+#header.smartScanRunning #share-donate-button {
+	background-color: @smartScanColor;
 }
 
 #header.introheader {

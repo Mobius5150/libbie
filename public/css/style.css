@@ -35,9 +35,9 @@ input#isbn {
   width: 774px;
   font-size: 24px;
   padding: 10px;
-  border: 3px solid #074099;
+  border: 0px;
   border-radius: 5px;
-  margin: 0 -10px;
+  margin: 3px -7px;
 }
 input[type='number'] {
   -moz-appearance: textfield;
@@ -291,6 +291,9 @@ kbd,
   float: left;
   padding: 0 5px 5px;
   font-size: 0.9em;
+}
+#header.smartScanRunning #share-donate-button {
+  background-color: #ff3f0d;
 }
 #header.introheader {
   padding: 1px 10px;

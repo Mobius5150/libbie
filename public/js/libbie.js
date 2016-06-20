@@ -153,13 +153,13 @@
 		config.isbnInput.val('');
 
 		$('#header').addClass('smartScanRunning');
-		$(this).attr('data-old-placeholder', $(this).attr('placeholder'));
-		$(this).attr('placeholder', 'Smart scan running... Re-scan barcode');
+		config.isbnInput.attr('data-old-placeholder', config.isbnInput.attr('placeholder'));
+		config.isbnInput.attr('placeholder', 'Smart scan running... Re-scan barcode');
 	}
 
 	function endSmartScan() {
 		smartScanRunning = false;
-		$(this).attr('placeholder', $(this).attr('data-old-placeholder'));
+		config.isbnInput.attr('placeholder', config.isbnInput.attr('data-old-placeholder'));
 		$('#header').removeClass('smartScanRunning');
 	}
 
