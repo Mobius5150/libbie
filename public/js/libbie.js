@@ -159,7 +159,7 @@
 		smartScanInterval = setInterval(function(){
 			var newText = config.isbnInput.attr('placeholder') + '.';
 
-			if (newText[newText.length - 4] === '.') {
+			if (newText[newText.length - 6] === '.') {
 				newText = 'Smart scan running... Re-scan barcode.';
 			}
 
@@ -181,8 +181,9 @@
 			entryKey = account.entryKey;
 		}
 
+		var isbn = parseIsbn(config.isbnInput.val());
 		var eventKeyString = buildEventKeyString(event);
-		console.log('Event key string: ', eventKeyString)
+		console.log('Event key string: ', eventKeyString, validateIsbn)
 		if (smartScanRunning && validateIsbn(isbn)) {
 			console.log('Smart scan identified key combo: ', eventKeyString);
 			endSmartScan();
@@ -190,10 +191,8 @@
 			socket.emit('setUserEntryKey', eventKeyString);
 		}
 
-		if (eventKeyString === entryKey) {
+		if (eventKeyString === entryKey && (!smartScanRunning || validateIsbn(isbn))) {
 			config.isbnInput.focus();
-
-			var isbn = parseIsbn(config.isbnInput.val());
 
 			if (!validateIsbn(isbn)) {
 				alert("Invalid isbn!");
