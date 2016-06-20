@@ -25,7 +25,7 @@
 		welcomePromptShown: false,
 		donationPromptShown: false,
 		notFoundCssProperties: { backgroundColor: '#333333' },
-		maxVisibleBooks: 5,
+		maxVisibleBooks: 30,
 		animateSpeed: 700,
 	};
 	
