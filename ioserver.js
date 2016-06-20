@@ -83,10 +83,10 @@ function addIsbn(data) {
 					return goodreads.addUserOwnedBook(addBookRequest, userOauthInfo(socket));
 				},
 				function(err) {
-					if (requestNo < config.goodreads.maxRetries) {
+					if (err.response.statusCode !== 404 && requestNo < config.goodreads.maxRetries) {
 						doRequest(requestNo + 1);
 					} else {
-						socket.emit('apperror', { type: 'application', msg: 'Error looking up book', data: err, searchIsbn: data.isbn });
+						socket.emit('apperror', { type: 'application', msg: 'Error looking up book', data: err, searchIsbn: data.isbn, requestNo: requestNo, });
 					}
 				})
 			.then(
@@ -102,7 +102,7 @@ function addIsbn(data) {
 					if (requestNo < config.goodreads.maxRetries) {
 						doRequest(requestNo + 1);
 					} else {
-						socket.emit('apperror', { type: 'application', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn });
+						socket.emit('apperror', { type: 'application', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn, requestNo: requestNo, });
 					}
 				});
 	}
