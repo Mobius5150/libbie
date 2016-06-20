@@ -114,7 +114,11 @@ function addIsbn(data) {
 function userHideWelcomePrompt(hide) {
 	var socket = this;
 	var showWelcomePrompt = hide ? false : true;
-	this.request.user.clientInfo.showWelcomePrompt = showWelcomePrompt;
+
+	if (typeof this.request.user.clientInfo !== 'undefined') {
+		this.request.user.clientInfo.showWelcomePrompt = showWelcomePrompt;
+	}
+
 	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'showWelcomePrompt': showWelcomePrompt })
 		.then(function (clientInfo) {
 			socket.emit('clientInfo', clientInfo);
@@ -134,7 +138,10 @@ function setUserEntryKey(key) {
 		return;
 	}
 
-	this.request.user.clientInfo.entryKey = entryKeyString;
+	if (typeof this.request.user.clientInfo !== 'undefined') {
+		this.request.user.clientInfo.entryKey = entryKeyString;
+	}
+
 	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'entryKey': entryKeyString })
 		.then(function (clientInfo) {
 			socket.emit('clientInfo', clientInfo);
