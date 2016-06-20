@@ -174,6 +174,7 @@
 		if (smartScanRunning && validateIsbn(isbn)) {
 			endSmartScan();
 			entryKey = account.entryKey = eventKeyString;
+			socket.emit('setUserEntryKey', eventKeyString);
 		}
 
 		if (eventKeyString === entryKey) {
