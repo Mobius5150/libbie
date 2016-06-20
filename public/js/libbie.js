@@ -200,7 +200,7 @@
 			console.log('Smart scan identified key combo: ', eventKeyString);
 			endSmartScan();
 			entryKey = account.entryKey = eventKeyString;
-			socket.emit('setUserEntryKey', eventKeyString);
+			socket.emit('setEntryKey', eventKeyString);
 		}
 
 		if (null !== smartScanShortIsbnTimeout) {
