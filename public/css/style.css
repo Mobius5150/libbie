@@ -25,7 +25,7 @@ body {
 #header {
   color: white;
   background-color: #074099;
-  border-radius: 5px;
+  border-radius: 5px 5px 5px 0;
   padding: 1px 10px 0 10px;
 }
 input#isbn {
@@ -251,6 +251,13 @@ kbd,
   text-align: right;
   text-decoration: none;
   background-color: #333333;
+}
+#share-donate-button {
+  background-color: #074099;
+  border-radius: 0 0 5px 5px;
+  color: #eee;
+  float: left;
+  padding: 0 5px 5px;
 }
 #header.introheader {
   padding: 1px 10px;

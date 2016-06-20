@@ -57,7 +57,7 @@ body {
 #header {
 	color: white;
 	background-color: @headerbgcolor;
-	border-radius: 5px;
+	border-radius: 5px 5px 5px 0;
 	padding: 1px @headerpadding 0 @headerpadding;
 }
 
@@ -327,6 +327,15 @@ kbd, .key {
 		text-decoration: none;
 		background-color: #333333;
 	}
+}
+
+#share-donate-button {
+	background-color: @headerbgcolor;
+    border-radius: 0 0 5px 5px;
+    color: #eee;
+    float: left;
+    padding: 0 5px 5px;
+	font-size: 0.9em;
 }
 
 #header.introheader {

@@ -120,16 +120,8 @@
 		}
 	});
 	
-	$('.share-facebook', config.donationPrompt).click(function () {
-		// TODO: Show facebook share
-	});
-	
-	$('.share-twitter', config.donationPrompt).click(function () {
-		// TODO: Show twitter share
-	});
-	
-	$('.donate', config.donationPrompt).click(function () {
-		// TODO: Show donate window
+	$('.donate').click(function () {
+		showDonationPrompt(true);
 	});
 	
 	$('.close, .continue', config.donationPrompt).click(function () {
