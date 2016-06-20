@@ -27,6 +27,9 @@ router.get('/', function (req, res, next) {
 			isSelected: function (input) {
 				return typeof input !== 'undefined' && input === true ? 'selected' : '';
 			}
-		}
+		},
+		tweetText: encodeURIComponent('I just used #Libbie to quickly add my book collection to @Goodreads!'),
+		tweetUrl: encodeURIComponent('https://libbie.azurewebsites.net'),
+		tweetRelated: 'michaelblouin' + encodeURIComponent(',Author of Libbie'),
 	});
 });
