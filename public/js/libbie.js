@@ -152,7 +152,7 @@
 		smartScanRunning = true;
 		config.isbnInput.val('');
 
-		$('#header').addClass('smartScanRunning');
+		$('#application').addClass('smartScanRunning');
 		config.isbnInput.attr('data-old-placeholder', config.isbnInput.attr('placeholder'));
 		config.isbnInput.attr('placeholder', 'Smart scan running... Re-scan barcode');
 	}
@@ -160,7 +160,7 @@
 	function endSmartScan() {
 		smartScanRunning = false;
 		config.isbnInput.attr('placeholder', config.isbnInput.attr('data-old-placeholder'));
-		$('#header').removeClass('smartScanRunning');
+		$('#application').removeClass('smartScanRunning');
 	}
 
 	config.isbnInput.keypress(function keypressHandler(event) {
