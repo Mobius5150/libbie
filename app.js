@@ -28,7 +28,7 @@ function isAuthenticated(req, res, next) {
 	if (req.user !== undefined) {
         next();
     } else {
-        res.redirect('/login');
+        res.redirect('/auth/goodreads');
     }
 }
 
