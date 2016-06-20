@@ -27,13 +27,14 @@
 		notFoundCssProperties: { backgroundColor: '#333333' },
 		maxVisibleBooks: 30,
 		animateSpeed: 700,
+		smartScanShortIsbnTimeout: 2000,
 	};
 	
 	var account = null;
 	var numSearches = 0;
 	var numVisibleSearches = 0;
 	var helperVisible = true;
-	var smartScanRunning = false, smartScanInterval = null;
+	var smartScanRunning = false, smartScanInterval = null, smartScanShortIsbnTimeout = null;
 
 	config.isbnInput.focus();
 
@@ -185,10 +186,22 @@
 		var eventKeyString = buildEventKeyString(event);
 		console.log('Event key string: ', eventKeyString, validateIsbn(isbn))
 		if (smartScanRunning && validateIsbn(isbn)) {
+			if (isbn.length === 10 && null === smartScanShortIsbnTimeout) {
+				smartScanShortIsbnTimeout = setTimeout(function () {
+					keypressHandler.call(config.isbnInput, event);
+				}, config.smartScanShortIsbnTimeout);
+				return;
+			}
+
 			console.log('Smart scan identified key combo: ', eventKeyString);
 			endSmartScan();
 			entryKey = account.entryKey = eventKeyString;
 			socket.emit('setUserEntryKey', eventKeyString);
+		}
+
+		if (null !== smartScanShortIsbnTimeout) {
+			clearTimeout(smartScanShortIsbnTimeout);
+			smartScanShortIsbnTimeout = null;
 		}
 
 		if (eventKeyString === entryKey && (!smartScanRunning || validateIsbn(isbn))) {
