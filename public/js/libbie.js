@@ -25,11 +25,13 @@
 		welcomePromptShown: false,
 		donationPromptShown: false,
 		notFoundCssProperties: { backgroundColor: '#333333' },
+		maxVisibleBooks: 5,
 		animateSpeed: 700,
 	};
 	
 	var account = null;
 	var numSearches = 0;
+	var numVisibleSearches = 0;
 	var helperVisible = true;
 
 	config.isbnInput.focus();
@@ -155,6 +157,13 @@
 
 			if (++numSearches >= config.donationSearchThreshold && !config.donationPromptShown) {
 				runIfUserPropertyEquals('hasDonated', false, wrapFuncCB(showDonationPrompt, true));
+			}
+
+			if (++numVisibleSearches >= config.maxVisibleBooks) {
+				--numVisibleSearches;
+				$('#searchList .addedIsbn:last-child').fadeOut(config.animateSpeed, function () {
+					$(this).remove();
+				});
 			}
 
 			config.isbnInput.val('');
