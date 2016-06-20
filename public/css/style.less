@@ -8,10 +8,14 @@
 @appwidth: 800px;
 @forkwidth: 1000px;
 
+@arrowbox-color: #2ecc71;
+@arrowbox-bordercolor: #219452;
+
 @prompt-z-index: 1000;
 @prompt-border: 10px;
-@prompt-border-color: black;
-@prompt-bg-color: rgba(155, 89, 182, 1);
+@prompt-border-color: @arrowbox-bordercolor;
+@prompt-bg-color: @arrowbox-color;
+@prompt-text-color: #fff;
 @prompt-border-radius: 30px;
 @prompt-padding-top: 0px;
 @prompt-padding-left: 10px;
@@ -255,6 +259,16 @@ kbd, .key {
 	color: white;
 }
 
+.button-orange {
+	background-color: #FF6239;
+	border-color: #FF3F0D;
+	color: white;
+}
+
+.button-orange {
+	background-color: #FF3F0D;
+}
+
 .button.donate {
 	font-size: 15px;
     padding: 10px 50px;
@@ -271,6 +285,7 @@ kbd, .key {
 	border-radius: @prompt-border-radius;
 	padding: @prompt-padding-top @prompt-padding-left;
 	display: none;
+	color: @prompt-text-color;
 }
 
 #prompt-cover {
@@ -373,8 +388,6 @@ kbd, .key {
 }
 
 // CSS Arrow from http://www.cssarrowplease.com/
-@arrowbox-color: #2ecc71;
-@arrowbox-bordercolor: #219452;
 .arrow_box {
 	position: relative;
 	background: @arrowbox-color;

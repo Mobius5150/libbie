@@ -194,6 +194,14 @@ kbd,
   background-color: maroon;
   color: white;
 }
+.button-orange {
+  background-color: #FF6239;
+  border-color: #FF3F0D;
+  color: white;
+}
+.button-orange {
+  background-color: #FF3F0D;
+}
 .button.donate {
   font-size: 15px;
   padding: 10px 50px;
@@ -204,11 +212,12 @@ kbd,
   left: 50%;
   margin-left: -400px;
   width: 760px;
-  background-color: #9b59b6;
-  border: 10px solid black;
+  background-color: #2ecc71;
+  border: 10px solid #219452;
   border-radius: 30px;
   padding: 0px 10px;
   display: none;
+  color: #ffffff;
 }
 #prompt-cover {
   position: absolute;
