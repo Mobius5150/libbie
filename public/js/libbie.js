@@ -183,7 +183,7 @@
 
 		var isbn = parseIsbn(config.isbnInput.val());
 		var eventKeyString = buildEventKeyString(event);
-		console.log('Event key string: ', eventKeyString, validateIsbn)
+		console.log('Event key string: ', eventKeyString, validateIsbn(isbn))
 		if (smartScanRunning && validateIsbn(isbn)) {
 			console.log('Smart scan identified key combo: ', eventKeyString);
 			endSmartScan();
