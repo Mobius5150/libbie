@@ -16,6 +16,7 @@
 @prompt-border-color: @arrowbox-bordercolor;
 @prompt-bg-color: @arrowbox-color;
 @prompt-text-color: #fff;
+@prompt-link-color: #333333;
 @prompt-border-radius: 10px;
 @prompt-padding-top: 0px;
 @prompt-padding-left: 10px;
@@ -286,6 +287,10 @@ kbd, .key {
 	padding: @prompt-padding-top @prompt-padding-left;
 	display: none;
 	color: @prompt-text-color;
+
+	a {
+		color: @prompt-link-color;
+	}
 }
 
 #prompt-cover {
