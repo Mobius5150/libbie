@@ -62,6 +62,7 @@ input::-webkit-inner-spin-button {
   bottom: 31px;
   padding: 5px 8px 5px 10px;
   right: 11px;
+  cursor: pointer;
 }
 a {
   color: #00B7FF;
