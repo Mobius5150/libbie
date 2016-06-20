@@ -258,6 +258,7 @@ kbd,
   color: #eee;
   float: left;
   padding: 0 5px 5px;
+  font-size: 0.9em;
 }
 #header.introheader {
   padding: 1px 10px;
