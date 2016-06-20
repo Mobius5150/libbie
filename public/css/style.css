@@ -211,10 +211,10 @@ kbd,
   position: absolute;
   left: 50%;
   margin-left: -400px;
-  width: 760px;
+  width: 774px;
   background-color: #2ecc71;
-  border: 10px solid #219452;
-  border-radius: 30px;
+  border: 3px solid #219452;
+  border-radius: 10px;
   padding: 0px 10px;
   display: none;
   color: #ffffff;
