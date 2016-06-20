@@ -49,6 +49,7 @@ function socketIoConnected(socket) {
 	socket.on('addIsbn', addIsbn);
 	socket.on('getClientInfo', getClientInfo);
 	socket.on('userHideWelcomePrompt', userHideWelcomePrompt);
+	socket.on('setEntryKey', setUserEntryKey);
 }
 
 function addIsbn(data) {
@@ -86,7 +87,7 @@ function addIsbn(data) {
 					if (err.response.statusCode !== 404 && requestNo < config.goodreads.maxRetries) {
 						doRequest(requestNo + 1);
 					} else {
-						socket.emit('apperror', { type: 'application', msg: 'Error looking up book', data: err, searchIsbn: data.isbn, requestNo: requestNo, });
+						socket.emit('apperror', { type: 'application', method: 'addIsbn', msg: 'Error looking up book', data: err, searchIsbn: data.isbn, requestNo: requestNo, });
 					}
 				})
 			.then(
@@ -102,7 +103,7 @@ function addIsbn(data) {
 					if (requestNo < config.goodreads.maxRetries) {
 						doRequest(requestNo + 1);
 					} else {
-						socket.emit('apperror', { type: 'application', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn, requestNo: requestNo, });
+						socket.emit('apperror', { type: 'application', method: 'addIsbn', msg: 'Error adding user owned book', data: err, searchIsbn: data.isbn, requestNo: requestNo, });
 					}
 				});
 	}
@@ -119,7 +120,27 @@ function userHideWelcomePrompt(hide) {
 			socket.emit('clientInfo', clientInfo);
 		})
 		.catch(function (err) {
-			socket.emit('apperror', { type: 'application', msg: 'Error updating user showWelcomePrompt', data: err });
+			socket.emit('apperror', { type: 'application', method: 'userHideWelcomePrompt', msg: 'Error updating user showWelcomePrompt', data: err });
+		});
+}
+
+function setUserEntryKey(key) {
+	var socket = this;
+	var entryKeyString = typeof key === 'string' ? key : 'Enter';
+
+	if (entryKeyString.length > 50) {
+		console.error('Entry key string too long!');
+		socket.emit('apperror', { type: 'application', method: 'setUserEntryKey', msg: 'Error setting entry key string: string too long' });
+		return;
+	}
+
+	this.request.user.clientInfo.entryKey = entryKeyString;
+	goodreadsAccountManager.setAccountProperties(socket.request.user.id, { 'entryKey': entryKeyString })
+		.then(function (clientInfo) {
+			socket.emit('clientInfo', clientInfo);
+		})
+		.catch(function (err) {
+			socket.emit('apperror', { type: 'application', method: 'setUserEntryKey', msg: 'Error updating user entryKey', data: err });
 		});
 }
 

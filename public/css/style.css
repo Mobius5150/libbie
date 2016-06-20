@@ -28,6 +28,9 @@ body {
   border-radius: 5px 5px 5px 0;
   padding: 1px 10px 0 10px;
 }
+#header.smartScanRunning {
+  background-color: #ff3f0d;
+}
 input#isbn {
   width: 774px;
   font-size: 24px;

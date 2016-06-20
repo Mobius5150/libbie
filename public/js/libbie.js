@@ -33,6 +33,7 @@
 	var numSearches = 0;
 	var numVisibleSearches = 0;
 	var helperVisible = true;
+	var smartScanRunning = false;
 
 	config.isbnInput.focus();
 
@@ -139,13 +140,43 @@
 		showWelcomePrompt(false);
 	});
 
+	$('.smartscan').click(function () {
+		if (smartScanRunning) {
+			endSmartScan();
+		} else {
+			startSmartScan();
+		}
+	});
+
+	function startSmartScan() {
+		smartScanRunning = true;
+		config.isbnInput.val('');
+
+		$('#header').addClass('smartScanRunning');
+		$(this).attr('data-old-placeholder', $(this).attr('placeholder'));
+		$(this).attr('placeholder', 'Smart scan running... Re-scan barcode');
+	}
+
+	function endSmartScan() {
+		smartScanRunning = false;
+		$(this).attr('placeholder', $(this).attr('data-old-placeholder'));
+		$('#header').removeClass('smartScanRunning');
+	}
+
 	config.isbnInput.keypress(function keypressHandler(event) {
 		var entryKey = 'Enter';
 		if (account !== null && typeof account.entryKey !== 'undefined') {
 			entryKey = account.entryKey;
 		}
-		
-		if (event.key === entryKey) {
+
+		var eventKeyString = buildEventKeyString(event);
+		console.log('Event key string: ', eventKeyString)
+		if (smartScanRunning && validateIsbn(isbn)) {
+			endSmartScan();
+			entryKey = account.entryKey = eventKeyString;
+		}
+
+		if (eventKeyString === entryKey) {
 			config.isbnInput.focus();
 
 			var isbn = parseIsbn(config.isbnInput.val());
@@ -183,6 +214,25 @@
 			}
 		}
 	});
+
+	function buildEventKeyString(e) {
+		var keys = [ e.key ];
+
+		if (e.metaKey) {
+			keys.push('Meta');
+		}
+
+		if (e.shiftKey) {
+			keys.push('Shift');
+		}
+
+		if (e.ctrlKey) {
+			keys.push('Control');
+		}
+
+		keys.sort();
+		return keys.join('+');
+	}
 
 	function validateIsbn(isbn) {
 		if (typeof isbn !== 'string') {
