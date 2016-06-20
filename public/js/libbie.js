@@ -188,7 +188,6 @@
 
 		var isbn = parseIsbn(config.isbnInput.val());
 		var eventKeyString = buildEventKeyString(event);
-		console.log('Event key string: ', eventKeyString, isbn, validateIsbn(isbn))
 		if (smartScanRunning && validateIsbn(isbn)) {
 			if (isbn.length < 13 && !isCallback) {
 				smartScanShortIsbnTimeout = setTimeout(function () {
