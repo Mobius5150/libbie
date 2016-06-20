@@ -36,7 +36,6 @@
 
 	var socket = io(config.serverUrl);
 	socket.emit('getClientInfo');
-	loadTwitterScripts();
 	
 	socket.on('error', function (data) {
 		console.log("Server sent error: ", data);
@@ -255,25 +254,6 @@
 		if (account !== null && typeof account[property] !== 'undefined' && account[property] === desiredValue) {
 			callback();	
 		}
-	}
-
-	function loadTwitterScripts() {
-		window.twttr = (function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0],
-				t = window.twttr || {};
-			if (d.getElementById(id)) return t;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "https://platform.twitter.com/widgets.js";
-			fjs.parentNode.insertBefore(js, fjs);
-			
-			t._e = [];
-			t.ready = function(f) {
-				t._e.push(f);
-			};
-			
-			return t;
-		}(document, "script", "twitter-wjs"));
 	}
 
 	switch (window.location.hash) {
